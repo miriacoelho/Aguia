@@ -336,7 +336,8 @@ function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target)
 			if (ans[0].error_code>0) {
 				alert("The key "+target.KEYGUI+" is not valid!");
 				url = window.location.href;
-				url = window.location.href.split("&PROJECTDATA");
+				url = url.toLowerCase();
+				url = window.location.href.split("&projectdata");
 				window.location.href = url[0];
 				
 			}

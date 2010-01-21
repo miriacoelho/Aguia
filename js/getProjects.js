@@ -7,7 +7,7 @@ var range=null;
 var domain=null;
 var action=null;
 var trigger=null;
-var valueTest=null;
+var value=null;
 var fieldTextArea=new Array();
 var fieldOptions=new Array();
 var fieldDate=new Array();
@@ -374,14 +374,14 @@ function getStatementsGUIRules(ans,verb,target) {
 	case "action":
 		action = ans;
 	break;
+	case "value":
+		value = ans;
+	break;
 	case "trigger":
 		trigger = ans;
 	break;
-	case "valueTest":
-		valueTest = ans;
-	break;
 	}
-	if ((range!=null)&&(domain!=null)&&(action!=null)&&(trigger!=null)&&(valueTest!=null)) {
+	if ((range!=null)&&(domain!=null)&&(action!=null)&&(trigger!=null)&&(value!=null)) {
 		joinStatementsGUIRules(target);
 	}
 }
@@ -408,7 +408,7 @@ function joinStatementsGUIRules(target) {
 	var indexRestrictionsActiveFields = 0;
 	var indexMoreFields = 0;
 	var indexSubCollections = 0;
-	var arrayGUIRules = new Array("range","domain","trigger","valueTest","action");
+	var arrayGUIRules = new Array("range","domain","trigger","value","action");
 	var arrayActions = new Array("hasTextArea","hasOptions","hasDate","hasText","hasFieldInactive","hasFormula","hasConcatenation","hasConditions","hasRestrictionsActiveFields","hasMoreFields","hasSubCollections");
 	for (var i=0; i<action.length; i++) {
 		for (var j=0; j<allActions.length; j++) {
@@ -519,8 +519,8 @@ function joinStatementsGUIRules(target) {
 				case "trigger":
 					ans = trigger;
 				break;
-				case "valueTest":
-					ans = valueTest;
+				case "value":
+					ans = value;
 				break;
 				}
 				for (var k=0; k<ans.length; k++) {

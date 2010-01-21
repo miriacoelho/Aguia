@@ -73,7 +73,7 @@ function checkFieldRestrictions(id,value){
 		for (var p=0;p<fieldFormula.length ;p++ )
 		{
 			optionsFormula = fieldFormula[p];
-			formule(optionsFormula,id);
+			formula(optionsFormula,id);
 		}
 	}
 }

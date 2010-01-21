@@ -126,7 +126,7 @@ function condictionsField1(receiveValue,id,hasGrid) {
 	if (receiveValue!="")
 	{
 		for (var i=0; i<conditions.length; i++) {
-			if (conditions[i].verb=="valueTest") {
+			if (conditions[i].verb=="trigger") {
 				if (receiveValue==conditions[i].value) {
 					tmp = true;
 					for (var j=0; j<conditions.length; j++) {
@@ -135,7 +135,7 @@ function condictionsField1(receiveValue,id,hasGrid) {
 								if (allRules[k].rule_id==conditions[j].value) {
 									var validation = searchSelect(allRules[j].validation);
 									for (var l=0; l<conditions.length; l++) {
-										if (conditions[l].verb=="trigger") {
+										if (conditions[l].verb=="value") {
 											inactive(k,conditions[l].value,"",hasGrid);
 										}
 									}
@@ -277,7 +277,7 @@ function restrictionActive(id){
 }
 function checkFieldRestrictions1(receiveValue,id,hasGrid){
 	for (var i=0; i<restrictions.length; i++) {
-		if (restrictions[i].verb=="valueTest") {
+		if (restrictions[i].verb=="trigger") {
 			if (receiveValue==restrictions[i].value) {
 				for (var j=0; j<restrictions.length; j++) {
 					if (restrictions[j].verb=="range") {
