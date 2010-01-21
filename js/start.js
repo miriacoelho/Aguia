@@ -154,7 +154,7 @@ function start(){
 	document.getElementById("tdURL").style.color = "#FFFFFF";
 	document.getElementById("tdURL").height="35px";
 	createTd("tdInputURL","trURL","");
-	createInput("inputURL","text","http://mdadqss3db02/clinicaltrials","tdInputURL");
+	createInput("inputURL","text","","tdInputURL");
 	createTr("trUsername","tbodyLogin");
 	createTd("tdUsername","trUsername","Username");
 	document.getElementById("tdUsername").style.font="bold 14px arial,serif";

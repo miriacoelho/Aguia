@@ -162,7 +162,7 @@ function start(){
 	document.getElementById("tdUsername").style.color = "#FFFFFF";
 	document.getElementById("tdUsername").height="35px";
 	createTd("tdInputUsername","trUsername","");
-	createInput("inputUsername","text","miria","tdInputUsername");
+	createInput("inputUsername","text","","tdInputUsername");
 	createTr("trPassword","tbodyLogin");
 	createTd("tdPassword","trPassword","Password");
 	document.getElementById("tdPassword").style.font="bold 14px arial,serif";
@@ -170,7 +170,7 @@ function start(){
 	document.getElementById("tdPassword").style.color = "#FFFFFF";
 	document.getElementById("tdPassword").height="35px";
 	createTd("tdInputPassword","trPassword","");
-	createInput("inputPassword","password","Charles7480","tdInputPassword","","");
+	createInput("inputPassword","password","","tdInputPassword","","");
 	var inputButton = document.createElement("input");
 	inputButton.id = "inputButton";
 	inputButton.type = "button";
