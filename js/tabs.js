@@ -215,7 +215,7 @@ function queryAllCollections(){
 	setStyle("loading","absolute","","","80%","50px");
 	var key = document.getElementById("key").value;
 	var project = document.getElementById("project").value;
-	var urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>name,collection_id</select><from>collections</from><where><project_id>'+project+'</project_id></where></S3QL>';
+	var urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>collections</from><where><project_id>'+project+'</project_id></where></S3QL>';
 	s3db_jsonpp_call(urlQuery,'getAllCollections(ans)');
 }
 function getAllCollections(collections){

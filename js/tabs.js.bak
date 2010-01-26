@@ -41,7 +41,7 @@ var indexGrid = 0;
 		project.value = document.getElementById("getProjects").value;
 	}
 	document.body.appendChild(project);
-	var urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>name,collection_id</select><from>collections</from><where><project_id>'+project.value+'</project_id></where></S3QL>';
+	var urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>collections</from><where><project_id>'+project.value+'</project_id></where></S3QL>';
 	s3db_jsonpp_call(urlQuery,"getCollections(ans,"+JSON.stringify(target)+")");
  }
  function getCollections(ans,target) {
