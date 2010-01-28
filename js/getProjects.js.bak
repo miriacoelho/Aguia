@@ -7,7 +7,7 @@ var range=null;
 var domain=null;
 var action=null;
 var trigger=null;
-var valueTest=null;
+var value=null;
 var fieldTextArea=new Array();
 var fieldOptions=new Array();
 var fieldDate=new Array();
@@ -24,6 +24,13 @@ function queryProjects(){
 	removeElement("imgLogin");
 	removeElement("pTextLogin");
 	removeElement("loading");
+	removeElement("helpLogin");
+	removeElement("imgTextHelp");
+	removeElement("pTextHelp");
+	removeElement("pTextHelp1");
+	removeElement("pTextHelp2");
+	removeElement("pTextHelp3");
+	removeElement("pTextHelp4");
 	var key = document.getElementById("key").value;
 	var urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>project_id,name</select><from>projects</from><where></where></S3QL>';
 	s3db_jsonpp_call(urlQuery,"getProjects(ans)");
@@ -50,6 +57,14 @@ function getProjects(ans){
 	img.style.display="none";
 	document.body.appendChild(img);	
 	setStyle("imgProjects","absolute","","","","190px");
+	var img = document.createElement("img");
+	img.id = "helpProjects";
+	img.src="images/InterrogacaoWinVista.PNG";
+	img.align = "top";
+	img.style.cursor="pointer";
+	img.setAttribute("onclick","help2();");
+	document.body.appendChild(img);	
+	setStyle("helpProjects","absolute","","","585px","413px");
 	createP("pTextSelectProjects","Select Projects","body");
 	setStyle("pTextSelectProjects","absolute","400px","","20px","185px");
 	document.getElementById("pTextSelectProjects").style.font="italic bold 16px arial,serif";
@@ -81,7 +96,7 @@ function getProjects(ans){
 		optionProject.value=ans[i].project_id;
 		document.getElementById("getProjects").appendChild(optionProject);
 		document.getElementById(optionProject.id).innerHTML=ans[i].name
-	}	
+	}
 	createTr("trCheckBoxGUIProjects","tbodySelectProject");
 	createTd("tdCheckBoxGUIProjects","trCheckBoxGUIProjects","");
 	var str = '<input id="checkBoxGUIProjects" type="checkbox" onclick="getUrlGUIRules();"><i><b><font color="#FFFFFF">Graphic rules in another S3DB domain</font></b></i></input>'
@@ -109,7 +124,7 @@ function getProjects(ans){
 		optionProject.value=ans[i].project_id;
 		document.getElementById("getRulesProjects").appendChild(optionProject);
 		document.getElementById(optionProject.id).innerHTML=ans[i].name
-	}	
+	}
 	createTr("trButtonOk","tbodySelectProject");
 	createTd("tdButtonOk","trButtonOk","");
 	var button = document.createElement("input");
@@ -119,6 +134,36 @@ function getProjects(ans){
 	button.disabled = "disabled"
 	button.setAttribute("onclick","getCollectionsRules('"+url+"','"+key+"')");
 	document.getElementById("tdButtonOk").appendChild(button);
+}
+function help2() {
+	if (document.getElementById("imgProjectsHelp")!=null) {
+		removeElement("imgProjectsHelp");
+		removeElement("pTextHelp");
+		removeElement("pTextHelp1");
+		removeElement("pTextHelp2");
+		removeElement("pTextHelp3");
+		removeElement("pTextHelp4");
+	}
+	else{
+		var img=document.createElement("img");
+		img.id="imgProjectsHelp";
+		img.src="images/help.png";
+		document.body.appendChild(img);
+		setStyle("imgProjectsHelp","absolute","","","627px","208px");
+		createP("pTextHelp","Help","body");
+		setStyle("pTextHelp","absolute","","","757px","210px");
+		document.getElementById("pTextHelp").style.font="italic bold 18px arial,serif";
+		document.getElementById("pTextHelp").style.fontWeight="900";
+		document.getElementById("pTextHelp").style.color = "#0F399B";
+		createP("pTextHelp1","-<b>Field Select Data Project</b>: please select S3DB data project","body");
+		setStyle("pTextHelp1","absolute","325px","","637px","250px");
+		document.getElementById("pTextHelp1").style.font="14px arial,serif";
+		document.getElementById("pTextHelp1").style.color = "#0F399B";
+		createP("pTextHelp2","-<b>Field Select Graphic Rules Project</b>: please select S3DB data project. If this project doesn't exists, please leave empty;","body");
+		setStyle("pTextHelp2","absolute","325px","","637px","290px");
+		document.getElementById("pTextHelp2").style.font="14px arial,serif";
+		document.getElementById("pTextHelp2").style.color = "#0F399B";
+	}	
 }
 function enableDisableButton(id) {
 	if (document.getElementById("buttonOk").disabled == true) {
@@ -137,9 +182,20 @@ function enableDisableButton(id) {
 function getUrlGUIRules() {
 	var key = document.getElementById("key").value;
 	if (document.getElementById("checkBoxGUIProjects").checked==true) {
+		if (document.getElementById("imgProjectsHelp")!=null) {
+			createP("pTextHelp3","-<b>Field URL GUI rules</b>: please enter URL GUI rules;","body");
+			setStyle("pTextHelp3","absolute","325px","","637px","350px");
+			document.getElementById("pTextHelp3").style.font="14px arial,serif";
+			document.getElementById("pTextHelp3").style.color = "#0F399B";
+			createP("pTextHelp4","-<b>Field Access Key</b>: please enter access key GUI rules and press enter.","body");
+			setStyle("pTextHelp4","absolute","325px","","637px","380px");
+			document.getElementById("pTextHelp4").style.font="14px arial,serif";
+			document.getElementById("pTextHelp4").style.color = "#0F399B";
+		}
 		removeElement("trButtonOk");
 		removeElement("trSelectRulesProject");
 		document.getElementById("imgProjectsSmall").style.display = "none";
+		setStyle("helpProjects","absolute","","","585px","493px");
 		document.getElementById("imgProjects").style.display = "";
 		setStyle("imgProjects","absolute","","","","190px");
 		createTr("trGUIProjectURL","tbodySelectProject");
@@ -154,6 +210,7 @@ function getUrlGUIRules() {
 		input.id="urlGuiProjects";
 		input.type = "text";
 		input.value="";
+		input.title="Enter with the S3DB URL!";
 		input.setAttribute("onchange","queryProjectGUIRules()");
 		document.getElementById("tdUrlGUIProject").appendChild(input);
 		document.getElementById("urlGuiProjects").size="35";
@@ -169,6 +226,7 @@ function getUrlGUIRules() {
 		input.id="keyGuiProjects";
 		input.type = "password";
 		input.value="";
+		input.title="Enter with the S3DB key and press enter!!!";
 		input.setAttribute("onchange","queryProjectGUIRules()");
 		document.getElementById("tdKeyGUIProject").appendChild(input);
 		createTr("trButtonOk","tbodySelectProject");
@@ -183,8 +241,11 @@ function getUrlGUIRules() {
 	else{
 		removeElement("trGUIProjectURL");
 		removeElement("trGUIProjectKey");
+		removeElement("pTextHelp3");
+		removeElement("pTextHelp4");
 		document.getElementById("imgProjectsSmall").style.display = "";
 		document.getElementById("imgProjects").style.display = "none";
+		setStyle("helpProjects","absolute","","","585px","413px");
 		removeElement("trButtonOk");
 		createTr("trSelectRulesProject","tbodySelectProject");
 		createTd("tdTextSelectRulesProject","trSelectRulesProject","Select Graphic Rules Project");
@@ -215,6 +276,9 @@ function getUrlGUIRules() {
 		button.id="buttonOk";
 		button.type="button";
 		button.value="Ok";
+		if (document.getElementById("getProjects").value=="") {
+			button.disabled = "disabled";
+		}
 		button.setAttribute("onclick","getCollectionsRules('"+url+"','"+key+"')");
 		document.getElementById("tdButtonOk").appendChild(button);
 
@@ -328,18 +392,21 @@ function getCollectionsRules(urlGUIProjects,keyGUIProjects,target) {
 }
 function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
     if (ans[0]!=null) {
+		if ((ans[0].error_code>0)&&(target==null)) {
+				alert("A unespected error ocorred in the server, please try again later!");
+				window.location.href = window.location.href;
+		}
 		if (ans[0].collection_id!=null) {
 			var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>item_id,notes</select><from>items</from><where><collection_id>'+ans[0].collection_id+'</collection_id></where></S3QL>';
 			s3db_jsonpp_call(urlQuery,'getActions(ans,"'+idProjectRules+'","'+urlGUIProjects+'","'+keyGUIProjects+'",'+JSON.stringify(target)+')');
 		}
 		else{
 			if (ans[0].error_code>0) {
-				alert("The key "+target.KEYGUI+" is not valid!");
-				url = window.location.href;
-				url = url.toLowerCase();
-				url = window.location.href.split("&projectdata");
-				window.location.href = url[0];
-				
+					alert("The key "+target.KEYGUI+" is not valid!");
+					url = window.location.href;
+					url = url.toLowerCase();
+					url = window.location.href.split("&projectdata");
+					window.location.href = url[0];
 			}
 			else{
 				alert("Collection GUI action not exists!\nPlease make this collection or select another rules project.");
@@ -354,10 +421,18 @@ function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target)
 }
 function getActions(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
 	allActions = ans;
+	if (ans[0].error_code>0) {
+		alert("A unespected error ocorred in the server, please try again later!");
+		window.location.href = window.location.href;
+	}
 	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>*</select><from>rules</from><where><project_id>'+idProjectRules+'</project_id><subject>GUI rules</subject></where></S3QL>';
 	s3db_jsonpp_call(urlQuery,'getAllRulesGUIAction(ans,"'+urlGUIProjects+'","'+keyGUIProjects+'",'+JSON.stringify(target)+')');
 }
 function getAllRulesGUIAction(ans,urlGUIProjects,keyGUIProjects,target) {
+	if (ans[0].error_code>0) {
+			alert("A unespected error ocorred in the server, please try again later!");
+			window.location.href = window.location.href;
+	}
 	for (var i=0; i<ans.length; i++) {
 		urlQuery= urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>*</select><from>statements</from><where><rule_id>'+ans[i].rule_id+'</rule_id></where></S3QL>';
 		s3db_jsonpp_call(urlQuery,'getStatementsGUIRules(ans,"'+ans[i].verb+'",'+JSON.stringify(target)+')');
@@ -374,14 +449,14 @@ function getStatementsGUIRules(ans,verb,target) {
 	case "action":
 		action = ans;
 	break;
+	case "value":
+		value = ans;
+	break;
 	case "trigger":
 		trigger = ans;
 	break;
-	case "valueTest":
-		valueTest = ans;
-	break;
 	}
-	if ((range!=null)&&(domain!=null)&&(action!=null)&&(trigger!=null)&&(valueTest!=null)) {
+	if ((range!=null)&&(domain!=null)&&(action!=null)&&(trigger!=null)&&(value!=null)) {
 		joinStatementsGUIRules(target);
 	}
 }
@@ -408,7 +483,7 @@ function joinStatementsGUIRules(target) {
 	var indexRestrictionsActiveFields = 0;
 	var indexMoreFields = 0;
 	var indexSubCollections = 0;
-	var arrayGUIRules = new Array("range","domain","trigger","valueTest","action");
+	var arrayGUIRules = new Array("range","domain","trigger","value","action");
 	var arrayActions = new Array("hasTextArea","hasOptions","hasDate","hasText","hasFieldInactive","hasFormula","hasConcatenation","hasConditions","hasRestrictionsActiveFields","hasMoreFields","hasSubCollections");
 	for (var i=0; i<action.length; i++) {
 		for (var j=0; j<allActions.length; j++) {
@@ -519,8 +594,8 @@ function joinStatementsGUIRules(target) {
 				case "trigger":
 					ans = trigger;
 				break;
-				case "valueTest":
-					ans = valueTest;
+				case "value":
+					ans = value;
 				break;
 				}
 				for (var k=0; k<ans.length; k++) {

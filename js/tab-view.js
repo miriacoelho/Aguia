@@ -230,7 +230,7 @@
 		var tabs = dhtmlgoodies_tabObj[mainContainerID].getElementsByTagName('DIV');
 		var divCounter = 0;
 		for(var no=0;no<tabs.length;no++){
-			if(((tabs[no].className=='dhtmlgoodies_aTab')||(tabs[no].className=='dhtmlgoodies_aTab1')) && (tabs[no].parentNode.id == mainContainerID)){
+			if(((tabs[no].className=='dhtmlgoodies_aTab')||(tabs[no].className=='dhtmlgoodies_aTab1')||(tabs[no].className=='dhtmlgoodies_aTab2')) && (tabs[no].parentNode.id == mainContainerID)){
 				if(height.length>0)tabs[no].style.height = height;
 				tabs[no].style.display='none';
 				tabs[no].id = 'tabView' + mainContainerID + "_" + divCounter;
@@ -259,7 +259,7 @@
 
 		
 		for(var no=0;no<divs.length;no++){
-			if((divs[no].className=='dhtmlgoodies_aTab')||(divs[no].className=='dhtmlgoodies_aTab1')){
+			if((divs[no].className=='dhtmlgoodies_aTab')||(divs[no].className=='dhtmlgoodies_aTab1')||((divs[no].className=='dhtmlgoodies_aTab2'))){
 				divs[no].id = 'tabView' + parentId + '_' + tabTitleCounter;
 				tabTitleCounter++;
 			}

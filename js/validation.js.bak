@@ -81,7 +81,7 @@ function getUserName(ans,target){
 		alert(ans[0].message);
 		url = window.location.href;
 		url = url.toLowerCase();
-		url = window.location.href.split("?projectdata");
+		url = window.location.href.split("?urldata");
 		window.location.href = url[0];
 	}
 	else{

@@ -1,7 +1,7 @@
 // --- S3DB.URL ---
 function s3db () {
 	s3db.id = 's3db';
-	s3db.config={"timeout_internal":100000,"timeout_external":10000,"fontFamily":"Verdana","fontSize_big":14,"fontSize_med":12,"fontSize_small":10}; 
+	s3db.config={"timeout_internal":1000,"timeout_external":10000,"fontFamily":"Verdana","fontSize_big":14,"fontSize_med":12,"fontSize_small":10}; 
 	s3db.state={"P":[],"C":[],"I":[],"S":[]}; 
 	s3db.U = new Array;
 	s3db.browse = [];
@@ -23,7 +23,7 @@ function s3db_check_url_success () {
 	return false;
 }
 function s3db_check_url_failure () {
-	alert("S3DB not found at this address.\nPlease, check your URL!");
+	alert("Time out was exceeded. The server may be busy or S3DB can not exist at this URL. \nPlease check the URL and try again!");
 	removeElement("loading");
 	if (whatURL=="url") {
 		url = window.location.href;

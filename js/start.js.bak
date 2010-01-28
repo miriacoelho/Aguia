@@ -80,7 +80,7 @@ function getFirstLocation(ans,target) {
 	if (ans[0].error_code!=null) {
 		alert(ans[0].message);
 		url = window.location.href;
-		url = window.location.href.split("?urldata");
+		url = window.location.href.split("?URLDATA");
 		window.location.href = url[0];
 	}
 	else{
@@ -117,6 +117,14 @@ function start(){
 	document.getElementById("pTextLogin").style.font="italic bold 16px arial,serif";
 	document.getElementById("pTextLogin").style.fontWeight="900";
 	document.getElementById("pTextLogin").style.color = "#FFFFFF";
+	var img = document.createElement("img");
+	img.id = "helpLogin";
+	img.src="images/InterrogacaoWinVista.PNG";
+	img.align = "top";
+	img.style.cursor="pointer";
+	img.setAttribute("onclick","help();");
+	document.body.appendChild(img);	
+	setStyle("helpLogin","absolute","","","440px","367px");
 	createTable("tableLogin","body","tbodyLogin");
 	setStyle("tableLogin","absolute","","","140px","180px");
 	createTr("trAutentication","tbodyLogin");
@@ -163,6 +171,7 @@ function start(){
 	document.getElementById("tdUsername").height="35px";
 	createTd("tdInputUsername","trUsername","");
 	createInput("inputUsername","text","miria","tdInputUsername");
+	document.getElementById("inputUsername").title = "Insert your S3DB username!";
 	createTr("trPassword","tbodyLogin");
 	createTd("tdPassword","trPassword","Password");
 	document.getElementById("tdPassword").style.font="bold 14px arial,serif";
@@ -171,6 +180,7 @@ function start(){
 	document.getElementById("tdPassword").height="35px";
 	createTd("tdInputPassword","trPassword","");
 	createInput("inputPassword","password","Charles7480","tdInputPassword","","");
+	document.getElementById("inputPassword").title = "Insert your S3DB password!";
 	var inputButton = document.createElement("input");
 	inputButton.id = "inputButton";
 	inputButton.type = "button";
@@ -182,6 +192,46 @@ function start(){
 	document.getElementById("tdButton").appendChild(inputButton);
 	document.getElementById("tdButton").align="right";
 	return false;
+}
+function help() {
+	if (document.getElementById("imgTextHelp")!=null) {
+		removeElement("imgTextHelp");
+		removeElement("pTextHelp");
+		removeElement("pTextHelp1");
+		removeElement("pTextHelp2");
+		removeElement("pTextHelp3");
+		removeElement("pTextHelp4");
+	}
+	else{
+		var img=document.createElement("img");
+		img.id="imgTextHelp";
+		img.src="images/help.png";
+		document.body.appendChild(img);
+		setStyle("imgTextHelp","absolute","","","486px","155px");
+		createP("pTextHelp","Help","body");
+		setStyle("pTextHelp","absolute","","","630px","160px");
+		document.getElementById("pTextHelp").style.font="italic bold 18px arial,serif";
+		document.getElementById("pTextHelp").style.fontWeight="900";
+		document.getElementById("pTextHelp").style.color = "#0F399B";
+		createP("pTextHelp1","-<b>Field Autority</b>: please select MD Anderson, google or S3DB autority;","body");
+		setStyle("pTextHelp1","absolute","325px","","495px","200px");
+		document.getElementById("pTextHelp1").style.font="14px arial,serif";
+		document.getElementById("pTextHelp1").style.color = "#0F399B";
+		createP("pTextHelp2","-<b>Field S3DB URL</b>: please insert S3DB URL;","body");
+		setStyle("pTextHelp2","absolute","325px","","495px","240px");
+		document.getElementById("pTextHelp2").style.font="14px arial,serif";
+		document.getElementById("pTextHelp2").style.color = "#0F399B";
+		createP("pTextHelp3","-<b>Field Username</b>: please enter your S3DB username;","body");
+		setStyle("pTextHelp3","absolute","325px","","495px","270px");
+		document.getElementById("pTextHelp3").style.font="14px arial,serif";
+		document.getElementById("pTextHelp3").style.color = "#0F399B";
+		createP("pTextHelp4","-<b>Field Password</b>: please enter your S3DB password.","body");
+		setStyle("pTextHelp4","absolute","325px","","495px","310px");
+		document.getElementById("pTextHelp4").style.font="14px arial,serif";
+		document.getElementById("pTextHelp4").style.color = "#0F399B";
+		
+	}
+
 }
 function createFieldset(idFieldset,idParent){
 	//create a tag<fieldset>

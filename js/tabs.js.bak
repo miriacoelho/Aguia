@@ -45,6 +45,10 @@ var indexGrid = 0;
 	s3db_jsonpp_call(urlQuery,"getCollections(ans,"+JSON.stringify(target)+")");
  }
  function getCollections(ans,target) {
+	 if ((ans[0].error_code>0)&&(target==null)) {
+			alert("An unexpected error occurred on the server, please try again later!");
+			window.location.href = window.location.href;
+	}
 	 var key = document.getElementById("key").value;
 	 if (ans[0].error_code>0) {
 		alert("The project "+target.PROJECTDATA+" not exist in url "+target.URLDATA);
@@ -57,6 +61,13 @@ var indexGrid = 0;
 		removeElement("tableSelectProject");
 		removeElement("imgProjectsSmall");
 		removeElement("imgProjects");
+		removeElement("imgProjectsHelp");
+		removeElement("pTextHelp");
+		removeElement("pTextHelp1");
+		removeElement("pTextHelp2");
+		removeElement("pTextHelp3");
+		removeElement("pTextHelp4");
+		removeElement("helpProjects");
 		removeElement("pTextSelectProjects");
 		createDiv("divTree","body","dTree");
 		d = new dTree('dCollections');
@@ -80,6 +91,10 @@ var indexGrid = 0;
  }
  //Todas as regras do projeto
  function getAllRules(ans,target) {
+	 if ((ans[0].error_code>0)&&(target==null)) {
+		alert("An unexpected error occurred on the server, please try again later!");
+		window.location.href = window.location.href;
+	}
 	var key = document.getElementById("key").value;
 	allRulesFixed = ans;
 	removeElement("loading");
@@ -95,6 +110,12 @@ var indexGrid = 0;
 	document.getElementById(id).style.textDecoration="none";
  }
  function queryCollectionsAssociated(collection_id,target){
+	 if (collection_id[0]!=null) {
+		if ((collection_id[0].error_code>0)&&(target==null)) {
+			alert("An unexpected error occurred on the server, please try again later!");
+			window.location.href = window.location.href;
+		}
+	 }
 	 var collection = false;
 	 if (collection_id[0]!=null) {
 		if (collection_id[0].error_code>0) {
@@ -181,6 +202,10 @@ function queryProjectName(){
 	s3db_jsonpp_call(urlQuery,"getProjectName(ans)");
 }
 function getProjectName(ans){
+	if ((ans[0].error_code>0)) {
+		alert("An unexpected error occurred on the server, please try again later!");
+		window.location.href = window.location.href;
+	}
 	projectName = ans[0].name;
 	document.getElementById("project").name = ans[0].name;
 	createP("pProjectName","Project Name: "+projectName,"body");
@@ -219,6 +244,10 @@ function queryAllCollections(){
 	s3db_jsonpp_call(urlQuery,'getAllCollections(ans)');
 }
 function getAllCollections(collections){
+	if ((ans[0].error_code>0)) {
+		alert("An unexpected error occurred on the server, please try again later!");
+		window.location.href = window.location.href;
+	}
 	var found = false;
 	var index = 0;
 	for (var i=0; i<collections.length; i++) {
@@ -264,22 +293,33 @@ function getAllCollections(collections){
 	for (var i=0; i<allCollections.length; i++) {
 		for (var j=0; j<initName.length; j++) {
 			if (initName[j]==allCollections[i].name) {
-				if (initName.length>14) {
-					createTabMain(allCollections[i],"dhtmlgoodies_aTab1");
+				if (initName.length>30) {
+					createTabMain(allCollections[i],"dhtmlgoodies_aTab2");
 				}
 				else{
-					createTabMain(allCollections[i],"dhtmlgoodies_aTab");
+					if (initName.length>14) {
+						createTabMain(allCollections[i],"dhtmlgoodies_aTab1");
+					}
+					else{
+						createTabMain(allCollections[i],"dhtmlgoodies_aTab");
+					}
 				}
 			}
 		}
 	}
-	if (initName.length>10) {
-		createDiv("divSearch","tabMain","dhtmlgoodies_aTab1");
+	if (initName.length>30) {
+		createDiv("divSearch","tabMain","dhtmlgoodies_aTab2");
 		createDiv("tabSearch","divSearch","");
 	}
 	else{
-		createDiv("divSearch","tabMain","dhtmlgoodies_aTab");
-		createDiv("tabSearch","divSearch","");
+		if (initName.length>14) {
+			createDiv("divSearch","tabMain","dhtmlgoodies_aTab1");
+			createDiv("tabSearch","divSearch","");
+		}
+		else{
+			createDiv("divSearch","tabMain","dhtmlgoodies_aTab");
+			createDiv("tabSearch","divSearch","");
+		}
 	}
 	initName[indice] = "Search";
 	indiceSearch = indice;
@@ -424,7 +464,7 @@ function createFields(collection_id,rule_id) {
 		if (allCollections[i].collection_id==collection_id) {
 			for (j = 0; j < allRules.length; j++) {
 				if (allRules[j].rule_id==rule_id) {
-				var search='><img id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" align="top" style="cursor:pointer" src="images/icon-search.PNG" onclick="tabSearch(this.id);"/>';
+				var search='><img id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" align="top" style="cursor:pointer" src="images/icon-search.PNG" title="Click here to search!" onclick="tabSearch(this.id);"/>';
 				if (allCollections[i].collection_id == allRules[j].subject_id) {
 					if ((allRules[j].verb != "isSubCollectionOf")&&(allRules[j].subject!="s3dbVerb")) {
 						createTable("table" + allCollections[i].name, "tab" + allCollections[i].name, "tbody" + allCollections[i].name);

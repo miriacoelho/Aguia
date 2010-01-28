@@ -18,6 +18,14 @@
 		padding:50px;		
 		
 	}
+	.dhtmlgoodies_aTab2{
+		border-left:1px solid #919b9c;
+		border-right:1px solid #919b9c;
+		border-bottom:1px solid #919b9c;
+		font-family: Trebuchet MS, Lucida Sans Unicode, Arial, sans-serif;
+		padding:80px;		
+		
+	}
 	.dhtmlgoodies_tabPane DIV{
 		float:left;
 		height:100%;	/* Height of tabs */
