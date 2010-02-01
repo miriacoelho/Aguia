@@ -18,7 +18,7 @@ function tabSearch(id){
 	}
 	allRules = removeNumberSubject(allRules);
 	createImg("loading","","pLoading","Loading","images/loading.gif","");
-	setStyle("loading","absolute","","","650px","50px");
+	setStyle("loading","absolute","","","80%","50px");
 	showTab("tabMain",indiceSearch);
 	inputSearch = document.getElementById(id).value;
 	//document.getElementById(id).value="";
@@ -216,7 +216,7 @@ function search(){
 	}
 	createP("pLoading","","body");
 	createImg("loading","","pLoading","Loading","images/loading.gif","");
-	setStyle("loading","absolute","","","650px","50px");
+	setStyle("loading","absolute","","","80%","50px");
 	var tmp = document.getElementById("tbodySearch").childNodes;
 	for (i=0;i<tmp.length-1 ;i++ )
 	{
@@ -367,7 +367,7 @@ function queryItems(ans,arraySearch,urlItem){
 	enableButtons("imgSearch2");
 	createP("pLoading","","body");
 	createImg("loading","","pLoading","Loading","images/loading.gif","");
-	setStyle("loading","absolute","","","650px","50px");
+	setStyle("loading","absolute","","","80%","50px");
 	showTab("tabMain",indexTabClicked);
 	var key = document.getElementById("key").value;
 	var item_id = document.getElementById("selectPatient").value; 
@@ -475,7 +475,7 @@ function isLiteral(ans,size) {
 	}
 }
 function putStatements(ans,literal) {
-	contStatements1++;
+contStatements1++;
 	var variable ="";
 	allRules = removeNumberSubject(allRules);
 	ans = removeNumberSubject(ans);
@@ -506,39 +506,16 @@ function putStatements(ans,literal) {
 					indexGrid=grid[j].rows.count();
 				}	
 			}
-		}if (ans.length>1) {
-			if (document.getElementById("checkGrid"+ans[0].subject)==null) {
-				var br= document.createElement("br");
-				br.id = "checkGrid"+ans[0].subject;
-				document.body.appendChild(br);
-				variable = "row1";
-			}
-			else{
-				if (literal!="literal") {
-					indexGrid = indexGrid-1;
-					createGridSearch(ans,indexGrid);	
-					indexGrid++;
-					variable = "row"+indexGrid;	
-				}
-				else{
-					indexGrid = indexGrid-1;
-					indexGrid++;
-					variable = "row"+indexGrid;	
-				}
-			}
+		}
+		if (literal!="literal") {
+			indexGrid = indexGrid-1;
+			createGridSearch(ans,indexGrid);	
+			variable = "row"+indexGrid;	
 		}
 		else{
-			if (literal!="literal") {
-					indexGrid = indexGrid-1;
-					createGridSearch(ans,indexGrid);	
-					variable = "row"+indexGrid;	
-				}
-				else{
-					indexGrid = indexGrid-1;
-					variable = "row"+indexGrid;	
-				}
+			indexGrid = indexGrid-1;	
+			variable = "row"+indexGrid;	
 		}
-		
 	}
 	for (var i=0;i<ans.length ;i++ )
 	{
@@ -699,9 +676,56 @@ function putStatements(ans,literal) {
 		arrayInsertUpdate.length = 0;
 		indexArrayInsertUpdate = 0;
 		removeElement("loading");
-		for (var i=0; i<allCollections.length; i++) {
-			if (document.getElementById("checkGrid"+allCollections[i].name)!=null) {
-				removeElement("checkGrid"+allCollections[i].name);
+		for (var k=0; k<allCollections.length; k++) {
+			isGrid=checkIfGrid(allCollections[k].collection_id);
+			if (isGrid==true) {
+				for (var l=0;l<grid.length ; l++)
+				{
+					if (grid[l].id=="grid"+allCollections[k].name)
+					{
+						indexGrid=grid[l].rows.count();
+						for (var m=1; m<indexGrid; m++) {
+							for (var n=0; n<allRules.length; n++) {
+								var validation = allRules[n
+									\].validation;
+								if (validation=="")
+								{
+									validation=checkFieldType(n);
+								}
+								if ((allRules[n].subject_id==allCollections[k].collection_id)&&(allRules[n].object_id=="")) {
+									if((validation == "text")||(validation=="")||(validation=="date")||(validation=="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation=="textarea"))
+									{
+										if(validation!="textarea"){
+											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m).value!="") {
+												var noDeleteGrid = true;
+											}
+										}
+										else{
+											if (validation=="textarea") {
+												if (document.getElementById("inputTextArea"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m).value!="") {
+													var noDeleteGrid = true;
+												}
+											}
+										}
+									}
+									else{
+										if ((validation.length>0)) {
+											var select = document.getElementById(allRules[n].subject+allRules[n].object+"optionEmpty"+"row"+m);
+											if (select.selected=="false") {
+												var noDeleteGrid = true;
+											}
+										}
+									}
+								}
+							}
+							if (noDeleteGrid==false) {
+								var sizeRowsGrid = grid[l].rows.count();
+								grid[l].rows.remove(grid[l].rows.count()-1);
+							}
+							var noDeleteGrid = false;
+						}
+					}
+				}
 			}
 		}
 	}
