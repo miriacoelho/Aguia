@@ -902,14 +902,14 @@ function disabledButtons(id){
 		arrayInsertUpdate.length = 0;
 		arrayCollectionsAssociatedUpdate.length = 0;
 		indexCollectionsAssociatedUpdate = 0;
-		removeElement("pImgNew");
-		removeElement("pImgUpdate");
 		createP("pImgNewDisabled","","body");
 		createImg("imgNewDisabled","","pImgNewDisabled","New","images/add_disabled.png","");
-		setStyle("pImgNewDisabled","absolute","","","79%","100px");
+		setStyle("pImgNewDisabled","absolute","","","79%","130px");
+		removeElement("pImgNew");
 		createP("pImgUpdateDisabled","","body");
 		createImg("imgUpdateDisabled","","pImgUpdateDisabled","Update","images/updateDisabled.png","");
-		setStyle("pImgUpdateDisabled","absolute","","","83%","100px");
+		setStyle("pImgUpdateDisabled","absolute","","","83%","130px");
+		removeElement("pImgUpdate");
 		if (id == "imgNew")
 		{
 			//Colocar as opcoes nas colecoes que nao sejam a colecao mae.
@@ -925,10 +925,10 @@ function disabledButtons(id){
 		}
 	}
 	if (id=="imgUpdate") {
-		removeElement("pImgUpdate");
 		createP("pImgUpdateDisabled","","body");
 		createImg("imgUpdateDisabled","","pImgUpdateDisabled","Update","images/updateDisabled.png","");
-		setStyle("pImgUpdateDisabled","absolute","","","83%","100px");
+		setStyle("pImgUpdateDisabled","absolute","","","83%","130px");
+		removeElement("pImgUpdate");
 		enableButtons(id);
 		getOptionsInsertUpdate();
 	}
@@ -968,30 +968,30 @@ function disabledButtons(id){
 function enableButtons(id){
 	if ((id=="imgNew")||(id=="imgUpdate"))
 	{
-		removeElement("pImgSaveDisabled");
-		removeElement("pImgCancelDisabled");
 		createP("pImgSave","","body");
 		createImg("imgSave","cursor:pointer","pImgSave","Save","images/save1.png","disabledButtons(this.id);");
 		setStyle("pImgSave","absolute","","","87%","130px");
 		createP("pImgCancel","","body");
 		createImg("imgCancel","cursor:pointer","pImgCancel","Cancel","images/cancel1.png","disabledButtons(this.id);");
 		setStyle("pImgCancel","absolute","","","91%","130px");
+		removeElement("pImgSaveDisabled");
+		removeElement("pImgCancelDisabled");
 	}
 	if (id=="imgSearch2") {
-		removeElement("pImgCancelDisabled");
-		removeElement("pImgUpdateDisabled");
 		createP("pImgCancel","","body");
 		createImg("imgCancel","cursor:pointer","pImgCancel","Cancel","images/cancel1.png","disabledButtons(this.id);");
 		setStyle("pImgCancel","absolute","","","91%","130px");
 		createP("pImgUpdate","","body");
 		createImg("imgUpdate","cursor:pointer","pImgUpdate","Update","images/update.png","disabledButtons(this.id);");
 		setStyle("pImgUpdate","absolute","","","83%","130px");
+		removeElement("pImgCancelDisabled");
+		removeElement("pImgUpdateDisabled");
 	}
 	if ((id=="imgCancel")||(id=="imgSave")||(id=="imgSearch1")||(id=="imgUpdate")) {
-		removeElement("pImgNewDisabled");
 		createP("pImgNew","","body");
 		createImg("imgNew","cursor:pointer","pImgNew","New","images/add1.png","disabledButtons(this.id);");
 		setStyle("pImgNew","absolute","","","79%","130px");
+		removeElement("pImgNewDisabled");
 	}
 }
 function array_unique (array) {

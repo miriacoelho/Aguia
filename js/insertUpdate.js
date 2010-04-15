@@ -53,6 +53,9 @@ function getOptionsInsertUpdate() {
 						}
 					}
 				}
+				if (allCollections.length==1) {
+						removeElement("loading");
+				}
 			}
 		}
 	}
@@ -181,18 +184,23 @@ function save(){
 	else{
 		insert();
 	}
-	createImg("loading","","pLoading","Loading","images/loading.gif","");
-	setStyle("loading","absolute","","","80%","50px");
 }
 function insert() {
-	var collectionReference = document.getElementById("collection").value;
-	var key = document.getElementById("key").value;
-	for (var i=0; i<allCollections.length; i++) {
-		//Insert item collectionReference first
-		if (allCollections[i].collection_id==collectionReference) {
-		//if grid insert two or more items
-			urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>item</insert><where><collection_id>'+allCollections[i].collection_id+'</collection_id></where></S3QL>';
-			s3db_jsonpp_call(urlQuery,'insertStatements(ans)');
+	if (arrayInsertUpdate.length==0) {
+		alert("You don't have nothing to insert!");
+	}
+	else{
+		createImg("loading","","pLoading","Loading","images/loading.gif","");
+		setStyle("loading","absolute","","","80%","50px");
+		var collectionReference = document.getElementById("collection").value;
+		var key = document.getElementById("key").value;
+		for (var i=0; i<allCollections.length; i++) {
+			//Insert item collectionReference first
+			if (allCollections[i].collection_id==collectionReference) {
+			//if grid insert two or more items
+				urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>item</insert><where><collection_id>'+allCollections[i].collection_id+'</collection_id></where></S3QL>';
+				s3db_jsonpp_call(urlQuery,'insertStatements(ans)');
+			}
 		}
 	}
 }
@@ -281,65 +289,72 @@ function confirmInsertions(ans) {
 	}
 }
 function update() {
-	var collectionReference = document.getElementById("collection").value;
-	var key = document.getElementById("key").value;
-	var item_id = document.getElementById("item_id").value;
-	for (var i=0; i<arrayInsertUpdate.length; i++) {
-		for (var j=0; j<allRules.length; j++) {
-			if (allRules[j].rule_id==arrayInsertUpdate[i]) {
-				// Se eh colecao de referencia 
-				for (var k=0; k<allCollections.length; k++) {
-					if (allCollections[k].collection_id==collectionReference) {
-						if (allCollections[k].collection_id==allRules[j].subject_id) {
-							var isGrid=checkIfGrid(allCollections[k].collection_id);
-							if (isGrid == true){
-								for (var l=0;l<grid.length ;l++ )
-								{
-									if (allCollections[k].name==grid[l].collection_name)
+	if (arrayInsertUpdate.length==0) {
+		alert("You don't have nothing to update!");
+	}
+	else{
+		createImg("loading","","pLoading","Loading","images/loading.gif","");
+		setStyle("loading","absolute","","","80%","50px");
+		var collectionReference = document.getElementById("collection").value;
+		var key = document.getElementById("key").value;
+		var item_id = document.getElementById("item_id").value;
+		for (var i=0; i<arrayInsertUpdate.length; i++) {
+			for (var j=0; j<allRules.length; j++) {
+				if (allRules[j].rule_id==arrayInsertUpdate[i]) {
+					// Se eh colecao de referencia 
+					for (var k=0; k<allCollections.length; k++) {
+						if (allCollections[k].collection_id==collectionReference) {
+							if (allCollections[k].collection_id==allRules[j].subject_id) {
+								var isGrid=checkIfGrid(allCollections[k].collection_id);
+								if (isGrid == true){
+									for (var l=0;l<grid.length ;l++ )
 									{
-										var aux = 0;
-										for (var m=1;m<grid[l].rows.count() ;m++ )
+										if (allCollections[k].name==grid[l].collection_name)
 										{
-											aux++;
-											result = checkField(allRules[j].rule_id,j);
-											value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+aux).value;
-											if (value!="") {
-												urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>statements</from><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+item_id+'</item_id></where></S3QL>';
-												s3db_jsonpp_call(urlQuery,"getStatementIdUpdate(ans,'"+value+"','"+item_id+"','"+allRules[j].rule_id+"')");		
+											var aux = 0;
+											for (var m=1;m<grid[l].rows.count() ;m++ )
+											{
+												aux++;
+												result = checkField(allRules[j].rule_id,j);
+												value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+aux).value;
+												if (value!="") {
+													urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>statements</from><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+item_id+'</item_id></where></S3QL>';
+													s3db_jsonpp_call(urlQuery,"getStatementIdUpdate(ans,'"+value+"','"+item_id+"','"+allRules[j].rule_id+"')");		
+												}
 											}
 										}
 									}
 								}
-							}
-							else{
-								result = checkField(allRules[j].rule_id,j);
-								value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id).value;
-								urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>statements</from><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+item_id+'</item_id></where></S3QL>';
-								s3db_jsonpp_call(urlQuery,"getStatementIdUpdate(ans,'"+value+"','"+item_id+"','"+allRules[j].rule_id+"')");
+								else{
+									result = checkField(allRules[j].rule_id,j);
+									value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id).value;
+									urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>statements</from><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+item_id+'</item_id></where></S3QL>';
+									s3db_jsonpp_call(urlQuery,"getStatementIdUpdate(ans,'"+value+"','"+item_id+"','"+allRules[j].rule_id+"')");
+								}
 							}
 						}
 					}
 				}
 			}
 		}
+		//Primeiro deletar as associacoes
+		for (var i=0; i<arrayCollectionsAssociatedUpdate.length; i++) {
+			for (var j=0; j<collectionsAssociated.length; j++) {
+				for (var k=0; k<allCollections.length; k++) {
+					if ((allCollections[k].collection_id==collectionsAssociated[j])&&(allCollections[k].collection_id!=collectionReference)
+						&&(arrayCollectionsAssociatedUpdate[i]==allCollections[k].name)) {
+						for (var l=0; l<allRules.length; l++) {
+							if ((allRules[l].subject_id==collectionReference)&&(allRules[l].object_id==collectionsAssociated[j])) {
+								//Buscar os statements para deletar
+								urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>statements</from><where><rule_id>'+allRules[l].rule_id+'</rule_id><item_id>'+item_id+'</item_id></where></S3QL>';
+								s3db_jsonpp_call(urlQuery,"deleteAssociations(ans,'"+item_id+"')");
+							}
+						}
+					}
+				}
+			}
+		}	
 	}
-	//Primeiro deletar as associacoes
-	for (var i=0; i<arrayCollectionsAssociatedUpdate.length; i++) {
-		for (var j=0; j<collectionsAssociated.length; j++) {
-			for (var k=0; k<allCollections.length; k++) {
-				if ((allCollections[k].collection_id==collectionsAssociated[j])&&(allCollections[k].collection_id!=collectionReference)
-					&&(arrayCollectionsAssociatedUpdate[i]==allCollections[k].name)) {
-					for (var l=0; l<allRules.length; l++) {
-						if ((allRules[l].subject_id==collectionReference)&&(allRules[l].object_id==collectionsAssociated[j])) {
-							//Buscar os statements para deletar
-							urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>*</select><from>statements</from><where><rule_id>'+allRules[l].rule_id+'</rule_id><item_id>'+item_id+'</item_id></where></S3QL>';
-							s3db_jsonpp_call(urlQuery,"deleteAssociations(ans,'"+item_id+"')");
-						}
-					}
-				}
-			}
-		}
-	}	
 }
 function getStatementIdUpdate(ans,value,item_id,rule_id) {
 	var collectionReference = document.getElementById("collection").value;
