@@ -52,7 +52,7 @@ function getProjects(ans){
 	setStyle("imgProjectsSmall","absolute","","","","190px");
 	var img = document.createElement("img");
 	img.id = "imgProjects";
-	img.src="images/selectProjects.png";
+	img.src="images/selectProjects.PNG";
 	img.align="center";
 	img.style.display="none";
 	document.body.appendChild(img);	
