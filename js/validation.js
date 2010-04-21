@@ -10,7 +10,7 @@ function validationData(){
 	var username = document.getElementById("inputUsername").value;
 	var password = document.getElementById("inputPassword").value;
 	url = removeLoginPHP(document.getElementById("inputURL").value);
-	url = url[0];
+	url =url[0] ;
 	if (username == "") {
 		alert("Please, enter your username");
 		return false;
@@ -28,7 +28,7 @@ function validationData(){
 	}
 	else{
 		whatURL="url";
-		s3db_check_url(url);
+		//s3db_check_url(url);
 		if (autority == "mdanderson")
 		{
 			urlKey = url+"/apilogin.php?username="+username+"&password="+password+"&authority=mdanderson";
@@ -130,6 +130,6 @@ function removeElement(id){
 }
 function removeLoginPHP(str){
 	var tmp="";
-	tmp = str.split(/[/login.php]*$/);
+	tmp = str.split(/login.php/);
 	return tmp;
 }
