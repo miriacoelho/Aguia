@@ -582,6 +582,9 @@ function joinStatementsGUIRules(target) {
 			case "hasSubCollections":
 				str = hasSubCollections;
 			break;
+			case "hasNumber":
+				str = hasNumber;
+			break;
 			}
 		for (var i=0; i<str.length; i++) {
 			var field = new Array();
@@ -647,6 +650,9 @@ function joinStatementsGUIRules(target) {
 				case "hasSubCollections":
 					subCollections[i] = field;
 				break;
+				case "hasNumber":
+					fieldNumber[i] = field;
+				break;
 				}
 			}
 			else{
@@ -683,6 +689,9 @@ function joinStatementsGUIRules(target) {
 				break;
 				case "hasSubCollections":
 					subCollections[i] = field;
+				break;
+				case "hasNumber":
+					fieldNumber = field;
 				break;
 				}
 			}		

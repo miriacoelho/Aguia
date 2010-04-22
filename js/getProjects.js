@@ -673,7 +673,7 @@ function joinStatementsGUIRules(target) {
 					fieldInactive=field;
 				break;
 				case "hasFormula":
-					fieldFormula = field;
+					fieldFormula[i] = field;
 				break;
 				case "hasConcatenation":
 					fieldConcatenation = field;
