@@ -645,8 +645,13 @@ function createGrid(collection_id,contGrid){
 							typeSelect = "date";
 						}
 						else {
-							if (validation.length > 0) {
-								typeSelect = "select";
+							if (validation == "number") {
+								typeSelect = "number";
+							}
+							else{
+								if (validation.length > 0) {
+									typeSelect = "select";
+								}
 							}
 						}
 					}
@@ -659,6 +664,9 @@ function createGrid(collection_id,contGrid){
 				grid[contGrid].setTextMatrix(indexGrid,0,indexGrid);
 				if (typeSelect == "text") {
 					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
+				}
+				if (typeSelect == "number") {
+					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
 				}
 				if (typeSelect == "date") {
 					var temp = cleanString(allRules[j].object);
