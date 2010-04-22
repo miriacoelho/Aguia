@@ -680,7 +680,16 @@ function createGrid(collection_id,contGrid){
 				if (typeSelect == "date") {
 					var temp = cleanString(allRules[j].object);
 					temp = temp+"row"+indexGrid;
-					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'mm/dd/yyyy',this)";
+					var formatDate = "";
+					for (var l=0; l<fieldDate.length; l++) {
+						if (fieldDate[l].verb=="value") {
+							formatDate = fieldDate[l].value;
+						}
+					}
+					if (formatDate =="") {
+						formatDate = "mm/dd/yyyy";
+					}
+					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'"+formatDate+"',this)";
 					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' +allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+indexGrid+'" type="text" value="" name="' + temp + '" onChange="checkFieldRestrictions(this.id);" '+readonly+'><img  align="top" style="cursor:pointer" src="images/calendar.png" onclick="' + onClickImage + '"/><img id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id +"row"+indexGrid+ '" align="top" style="cursor:pointer" src="images/icon-search.PNG" onclick="tabSearch(this.id);"/>');
 				}
 				if (typeSelect == "textArea")
