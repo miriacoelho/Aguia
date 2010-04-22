@@ -19,6 +19,7 @@ var fieldCondition=new Array();
 var fieldRestrictionsActive=new Array();
 var moreFields=new Array();
 var subCollections = new Array();
+var fieldNumber = new Array();
 function queryProjects(){
 	removeElement("tableLogin");
 	removeElement("imgLogin");
@@ -52,7 +53,7 @@ function getProjects(ans){
 	setStyle("imgProjectsSmall","absolute","","","","190px");
 	var img = document.createElement("img");
 	img.id = "imgProjects";
-	img.src="images/selectProjects.png";
+	img.src="images/selectProjects.PNG";
 	img.align="center";
 	img.style.display="none";
 	document.body.appendChild(img);	
@@ -393,7 +394,7 @@ function getCollectionsRules(urlGUIProjects,keyGUIProjects,target) {
 function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
     if (ans[0]!=null) {
 		if ((ans[0].error_code>0)&&(target==null)) {
-				alert("A unespected error ocorred in the server, please try again later!");
+				alert("An unexpected error occurred on the server, please try again later!");
 				window.location.href = window.location.href;
 		}
 		if (ans[0].collection_id!=null) {
@@ -422,7 +423,7 @@ function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target)
 function getActions(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
 	allActions = ans;
 	if (ans[0].error_code>0) {
-		alert("A unespected error ocorred in the server, please try again later!");
+		alert("An unexpected error occurred on the server, please try again later!");
 		window.location.href = window.location.href;
 	}
 	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>*</select><from>rules</from><where><project_id>'+idProjectRules+'</project_id><subject>GUI rules</subject></where></S3QL>';
@@ -430,7 +431,7 @@ function getActions(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
 }
 function getAllRulesGUIAction(ans,urlGUIProjects,keyGUIProjects,target) {
 	if (ans[0].error_code>0) {
-			alert("A unespected error ocorred in the server, please try again later!");
+			alert("An unexpected error occurred on the server, please try again later!");
 			window.location.href = window.location.href;
 	}
 	for (var i=0; i<ans.length; i++) {
@@ -472,6 +473,7 @@ function joinStatementsGUIRules(target) {
 	var hasRestrictionsActiveFields = new Array();
 	var hasMoreFields= new Array();
 	var hasSubCollections = new Array();
+	var hasNumber = new Array();
 	var indexTextArea = 0;
 	var indexOptions=0;
 	var indexText = 0;
@@ -483,8 +485,9 @@ function joinStatementsGUIRules(target) {
 	var indexRestrictionsActiveFields = 0;
 	var indexMoreFields = 0;
 	var indexSubCollections = 0;
+	var indexNumber = 0;
 	var arrayGUIRules = new Array("range","domain","trigger","value","action");
-	var arrayActions = new Array("hasTextArea","hasOptions","hasDate","hasText","hasFieldInactive","hasFormula","hasConcatenation","hasConditions","hasRestrictionsActiveFields","hasMoreFields","hasSubCollections");
+	var arrayActions = new Array("hasTextArea","hasOptions","hasDate","hasText","hasFieldInactive","hasFormula","hasConcatenation","hasConditions","hasRestrictionsActiveFields","hasMoreFields","hasSubCollections","hasNumber");
 	for (var i=0; i<action.length; i++) {
 		for (var j=0; j<allActions.length; j++) {
 			if (allActions[j].item_id == action[i].value) {
@@ -532,6 +535,10 @@ function joinStatementsGUIRules(target) {
 				case "hasSubCollections":
 					hasSubCollections[indexSubCollections]=action[i].item_id;
 					indexSubCollections++;
+				break;
+				case "hasNumber":
+					hasNumber[indexNumber]=action[i].item_id;
+					indexNumber++;
 				break;
 				}
 			}

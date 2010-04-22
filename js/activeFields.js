@@ -101,8 +101,13 @@ function checkGridActiveFields(i,validation,id,readonly){
 				if ((validation == "(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation == "date")) {
 				}
 				else {
-					if (validation.length > 0) {
-						document.getElementById("select" +allRules[i].subject+allRules[i].object +allRules[i].rule_id+"row"+number).disabled="";
+					if (validation == "number") {
+						document.getElementById("input" + allRules[i].subject + allRules[i].object + allRules[i].rule_id+"row"+number).readOnly=false;
+					}
+					else{
+						if (validation.length > 0) {
+							document.getElementById("select" +allRules[i].subject+allRules[i].object +allRules[i].rule_id+"row"+number).disabled="";
+						}
 					}
 				}
 			}

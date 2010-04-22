@@ -19,6 +19,7 @@ var fieldCondition=new Array();
 var fieldRestrictionsActive=new Array();
 var moreFields=new Array();
 var subCollections = new Array();
+var fieldNumber = new Array();
 function queryProjects(){
 	removeElement("tableLogin");
 	removeElement("imgLogin");
@@ -472,6 +473,7 @@ function joinStatementsGUIRules(target) {
 	var hasRestrictionsActiveFields = new Array();
 	var hasMoreFields= new Array();
 	var hasSubCollections = new Array();
+	var hasNumber = new Array();
 	var indexTextArea = 0;
 	var indexOptions=0;
 	var indexText = 0;
@@ -483,8 +485,9 @@ function joinStatementsGUIRules(target) {
 	var indexRestrictionsActiveFields = 0;
 	var indexMoreFields = 0;
 	var indexSubCollections = 0;
+	var indexNumber = 0;
 	var arrayGUIRules = new Array("range","domain","trigger","value","action");
-	var arrayActions = new Array("hasTextArea","hasOptions","hasDate","hasText","hasFieldInactive","hasFormula","hasConcatenation","hasConditions","hasRestrictionsActiveFields","hasMoreFields","hasSubCollections");
+	var arrayActions = new Array("hasTextArea","hasOptions","hasDate","hasText","hasFieldInactive","hasFormula","hasConcatenation","hasConditions","hasRestrictionsActiveFields","hasMoreFields","hasSubCollections","hasNumber");
 	for (var i=0; i<action.length; i++) {
 		for (var j=0; j<allActions.length; j++) {
 			if (allActions[j].item_id == action[i].value) {
@@ -533,6 +536,10 @@ function joinStatementsGUIRules(target) {
 					hasSubCollections[indexSubCollections]=action[i].item_id;
 					indexSubCollections++;
 				break;
+				case "hasNumber":
+					hasNumber[indexNumber]=action[i].item_id;
+					indexNumber++;
+				break;
 				}
 			}
 		}
@@ -574,6 +581,9 @@ function joinStatementsGUIRules(target) {
 			break;
 			case "hasSubCollections":
 				str = hasSubCollections;
+			break;
+			case "hasNumber":
+				str = hasNumber;
 			break;
 			}
 		for (var i=0; i<str.length; i++) {
@@ -640,6 +650,9 @@ function joinStatementsGUIRules(target) {
 				case "hasSubCollections":
 					subCollections[i] = field;
 				break;
+				case "hasNumber":
+					fieldNumber[i] = field;
+				break;
 				}
 			}
 			else{
@@ -676,6 +689,9 @@ function joinStatementsGUIRules(target) {
 				break;
 				case "hasSubCollections":
 					subCollections[i] = field;
+				break;
+				case "hasNumber":
+					fieldNumber = field;
 				break;
 				}
 			}		

@@ -510,8 +510,13 @@ function createFields(collection_id,rule_id) {
 										typeSelect = "date";
 									}
 									else {
-										if (validation.length > 0) {
-											typeSelect = "select";
+										if (validation == "number") {
+											typeSelect = "number";
+										}
+										else{
+											if (validation.length > 0) {
+												typeSelect = "select";
+											}
 										}
 									}
 								}
@@ -524,6 +529,10 @@ function createFields(collection_id,rule_id) {
 							if (typeSelect == "text") {
 								createTd("tdInput" + allCollections[i].name + allRules[j].object, "tr" + allCollections[i].name + allRules[j].object, "");
 								document.getElementById("tdInput" + allCollections[i].name + allRules[j].object).innerHTML = '<input id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" type="text" value="" onblur="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'';
+							}
+							if (typeSelect == "number") {
+								createTd("tdInput" + allCollections[i].name + allRules[j].object, "tr" + allCollections[i].name + allRules[j].object, "");
+								document.getElementById("tdInput" + allCollections[i].name + allRules[j].object).innerHTML = '<input id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" type="text" value="" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'';
 							}
 							if (typeSelect == "date") {
 								var temp = cleanString(allRules[j].object);
@@ -767,6 +776,17 @@ function checkFieldType(k){
 			}
 		}
 	}
+	if (fieldNumber[0]!=null)
+	{
+		for (var j=0;j<fieldNumber.length ;j++ )
+		{
+			if (allRules[k].rule_id==fieldNumber[j].value)
+			{
+				optionsField = "number";
+				break;
+			}
+		}
+	}
 	if (fieldOptions[0]!=null)
 	{
 		for (var j=0;j<fieldOptions.length ;j++ )
@@ -927,7 +947,7 @@ function disabledButtons(id){
 	if (id=="imgUpdate") {
 		createP("pImgUpdateDisabled","","body");
 		createImg("imgUpdateDisabled","","pImgUpdateDisabled","Update","images/updateDisabled.png","");
-		setStyle("pImgUpdateDisabled","absolute","","","83%","100px");
+		setStyle("pImgUpdateDisabled","absolute","","","83%","130px");
 		removeElement("pImgUpdate");
 		enableButtons(id);
 		getOptionsInsertUpdate();
@@ -1021,6 +1041,16 @@ function array_unique (array) {
     
     return tmp_arr2;
 }
+function onlyNumber(fieldNumber) {
+	var digits="0123456789"  
+	var field_temp   
+		for (var i=0;i<fieldNumber.value.length;i++){  
+			field_temp=fieldNumber.value.substring(i,i+1)   
+			if (digits.indexOf(field_temp)==-1){  
+				fieldNumber.value = fieldNumber.value.substring(0,i);  
+			}  
+		}  
+} 
 function cleanGlobalVariables() {
 	indexLoading=0;
 	indexRemoveLoading = 0;

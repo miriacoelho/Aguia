@@ -510,8 +510,13 @@ function createFields(collection_id,rule_id) {
 										typeSelect = "date";
 									}
 									else {
-										if (validation.length > 0) {
-											typeSelect = "select";
+										if (validation == "number") {
+											typeSelect = "number";
+										}
+										else{
+											if (validation.length > 0) {
+												typeSelect = "select";
+											}
 										}
 									}
 								}
@@ -524,6 +529,10 @@ function createFields(collection_id,rule_id) {
 							if (typeSelect == "text") {
 								createTd("tdInput" + allCollections[i].name + allRules[j].object, "tr" + allCollections[i].name + allRules[j].object, "");
 								document.getElementById("tdInput" + allCollections[i].name + allRules[j].object).innerHTML = '<input id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" type="text" value="" onblur="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'';
+							}
+							if (typeSelect == "number") {
+								createTd("tdInput" + allCollections[i].name + allRules[j].object, "tr" + allCollections[i].name + allRules[j].object, "");
+								document.getElementById("tdInput" + allCollections[i].name + allRules[j].object).innerHTML = '<input id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" type="text" value="" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'';
 							}
 							if (typeSelect == "date") {
 								var temp = cleanString(allRules[j].object);
@@ -636,8 +645,13 @@ function createGrid(collection_id,contGrid){
 							typeSelect = "date";
 						}
 						else {
-							if (validation.length > 0) {
-								typeSelect = "select";
+							if (validation == "number") {
+								typeSelect = "number";
+							}
+							else{
+								if (validation.length > 0) {
+									typeSelect = "select";
+								}
 							}
 						}
 					}
@@ -650,6 +664,9 @@ function createGrid(collection_id,contGrid){
 				grid[contGrid].setTextMatrix(indexGrid,0,indexGrid);
 				if (typeSelect == "text") {
 					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
+				}
+				if (typeSelect == "number") {
+					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
 				}
 				if (typeSelect == "date") {
 					var temp = cleanString(allRules[j].object);
@@ -763,6 +780,17 @@ function checkFieldType(k){
 			if (allRules[k].rule_id==fieldText[j].value)
 			{
 				optionsField = "text";
+				break;
+			}
+		}
+	}
+	if (fieldNumber[0]!=null)
+	{
+		for (var j=0;j<fieldNumber.length ;j++ )
+		{
+			if (allRules[k].rule_id==fieldNumber[j].value)
+			{
+				optionsField = "number";
 				break;
 			}
 		}
@@ -1021,6 +1049,16 @@ function array_unique (array) {
     
     return tmp_arr2;
 }
+function onlyNumber(fieldNumber) {
+	var digits="0123456789"  
+	var field_temp   
+		for (var i=0;i<fieldNumber.value.length;i++){  
+			field_temp=fieldNumber.value.substring(i,i+1)   
+			if (digits.indexOf(field_temp)==-1){  
+				fieldNumber.value = fieldNumber.value.substring(0,i);  
+			}  
+		}  
+} 
 function cleanGlobalVariables() {
 	indexLoading=0;
 	indexRemoveLoading = 0;

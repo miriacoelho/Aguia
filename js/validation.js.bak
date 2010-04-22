@@ -65,6 +65,7 @@ function getKey(ans,target){
 		if (ans[0].key_id==undefined){
 			removeElement("loading");
 			alert(ans[0].message);
+			window.location.href = window.location.href;
 		}
 		else{		
 			var temp=document.createElement("br");
