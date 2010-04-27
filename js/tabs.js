@@ -379,7 +379,7 @@ function getRules(){
 	var index = 0;
 	for (var i=0; i<subCollections.length; i++) {
 		for (var j=0; j<subCollections[i].length; j++) {
-			if (subCollections[i][j].verb=="range") {
+			if ((subCollections[i][j].verb=="range")&&(subCollectionsOrder!="")) {
 				subCollections[i][j] = subCollectionsOrder[index];
 				index++;
 			}

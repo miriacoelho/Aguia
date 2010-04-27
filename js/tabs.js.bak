@@ -379,7 +379,7 @@ function getRules(){
 	var index = 0;
 	for (var i=0; i<subCollections.length; i++) {
 		for (var j=0; j<subCollections[i].length; j++) {
-			if (subCollections[i][j].verb=="range") {
+			if ((subCollections[i][j].verb=="range")&&(subCollectionsOrder!=null)) {
 				subCollections[i][j] = subCollectionsOrder[index];
 				index++;
 			}
@@ -550,7 +550,7 @@ function createFields(collection_id,rule_id) {
 								}
 								for (var l=0; l<fieldDate.length; l++) {
 									for (var m=0; m<fieldDate.length; m++) {
-										if ((l == indexL)&&(fieldDate[l][m]=="value")) {
+										if ((l == indexL)&&(fieldDate[l][m].verb=="value")) {
 											formatDate = fieldDate[l][m].value;
 										}
 									}
@@ -705,7 +705,7 @@ function createGrid(collection_id,contGrid){
 					}
 					for (var l=0; l<fieldDate.length; l++) {
 						for (var m=0; m<fieldDate.length; m++) {
-							if ((l == indexL)&&(fieldDate[l][m]=="value")) {
+							if ((l == indexL)&&(fieldDate[l][m].verb=="value")) {
 								formatDate = fieldDate[l][m].value;
 							}
 						}
