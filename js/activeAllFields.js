@@ -23,8 +23,13 @@ function activeAllFields(){
 						if ((validation == "(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation == "date")) {
 						}
 						else {
-							if (validation.length > 0) {
-								document.getElementById("select" +allRules[i].subject+allRules[i].object +allRules[i].rule_id).disabled="disabled";
+							if (validation == "number") {
+								document.getElementById("input" + allRules[i].subject + allRules[i].object + allRules[i].rule_id).readOnly=true;
+							}
+							else{
+								if (validation.length > 0) {
+									document.getElementById("select" +allRules[i].subject+allRules[i].object +allRules[i].rule_id).disabled="disabled";
+								}
 							}
 						}
 					}
@@ -38,18 +43,19 @@ function activeAllFields(){
 					}
 					else {
 						if ((validation == "")||(validation=="text")) {
-							if (document.getElementById("input" + allRules[i].subject + allRules[i].object + allRules[i].rule_id)==null)
-							{
-								alert("input" + allRules[i].subject + allRules[i].object + allRules[i].rule_id);
-							}
 							document.getElementById("input" + allRules[i].subject + allRules[i].object + allRules[i].rule_id).readOnly=false;
 						}
 						else {
 							if ((validation == "(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation == "date")) {
 							}
 							else {
-								if (validation.length > 0) {
-									document.getElementById("select" +allRules[i].subject+allRules[i].object +allRules[i].rule_id).disabled="";
+								if (validation == "number") {
+									document.getElementById("input" + allRules[i].subject + allRules[i].object + allRules[i].rule_id).readOnly=false;
+								}
+								else{
+									if (validation.length > 0) {
+										document.getElementById("select" +allRules[i].subject+allRules[i].object +allRules[i].rule_id).disabled="";
+									}
 								}
 							}
 						}

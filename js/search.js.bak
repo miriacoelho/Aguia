@@ -119,38 +119,69 @@ function createField(rule_id,inputSearch){
 					createTd("tdSearch"+collection+object+rule_id,"trSearch"+collection+object,collection+" "+object);
 					createTd("tdInputSearch" +collection+object, "trSearch"+collection+object, "");
 					createTd("tdButtons"+collection+ object, "trSearch"+collection+object, "");
-					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'mm/dd/yyyy',this)";
+					var formatDate = "";
+					var indexL = "";
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate[l].length; m++) {
+							if (fieldDate[l][m].verb=="domain") {
+								if (fieldDate[l][m].value==allRules[j].rule_id) {
+									indexL = l;
+								}
+							}	
+						}
+					}
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate.length; m++) {
+							if ((l == indexL)&&(fieldDate[l][m].verb=="value")) {
+								formatDate = fieldDate[l][m].value;
+							}
+						}
+					}
+					if (formatDate =="") {
+						formatDate = "mm/dd/yyyy";
+					}
+					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'"+formatDate+"',this)";
 					document.getElementById("tdInputSearch" +collection+object).innerHTML = '<input id="inputSearch' +collection+object+rule_id+ '" type="text" value="'+inputSearch+'" name="' + temp + '" readonly=""><img  align="top" style="cursor:pointer" src="images/calendar.png" onclick="' + onClickImage + '"/>';
 					var buttons = '&nbsp&nbsp&nbsp&nbsp<img id="inputSearchAdd' + collection+object+rule_id + '" align="top" style="cursor:pointer" title="Add Parameter" src="images/Add.png" onclick="addFields();"/>&nbsp&nbsp&nbsp&nbsp<img id="trSearch'+collection+ object +'" align="top" style="cursor:pointer" title="Delete Parameter" src="images/Delete.png" onclick="removeElement(this.id);"/>&nbsp&nbsp&nbsp&nbsp<input id="searchBy'+collection+object+'" type="radio"  name="searchBy" value="'+collection+object+'">Result by '+collection+" "+object+'</input>';
 					document.getElementById("tdButtons" +collection+object).innerHTML = buttons;
 				}
 			}
 			else {
-				if (validation.length > 0) {
-					if(document.getElementById("tdSelectSearch"+collection+object)==null) {
-						createTd("tdSearch"+collection+object+rule_id,"trSearch"+collection+object,collection+" "+object);
-						createTd("tdSelectSearch" +collection+ object, "trSearch"+collection+object, "");
-						createTd("tdButtons"+collection+ object, "trSearch"+collection+object, "");
-						var str = '<select id="selectSearch' +collection+object +rule_id+ '" onChange=""></select>';
-						document.getElementById("tdSelectSearch" +collection+object).innerHTML = str;
-						var buttons = '&nbsp&nbsp&nbsp&nbsp<img id="selectSearchAdd' + collection+object+rule_id + '" align="top" style="cursor:pointer" title="Add Parameter" src="images/Add.png" onclick="addFields();"/>&nbsp&nbsp&nbsp&nbsp<img id="trSearch'+ collection+object +'" align="top" style="cursor:pointer" title="Delete Parameter" src="images/Delete.png" onclick="removeElement(this.id);"/>&nbsp&nbsp&nbsp&nbsp<input id="searchBy'+collection+object+'" type="radio"  name="searchBy" value="'+collection+object+'">Result by '+collection+" "+object+'</input>';
-						document.getElementById("tdButtons" +collection+object).innerHTML = buttons;
-						var option = document.createElement("option");
-						option.id = "optionSearch"+collection+object+"optionEmpty";
-						option.value = "";
-						document.getElementById("selectSearch" +collection+object+rule_id).appendChild(option);
-						document.getElementById(option.id).innerHTML = "";
-						for (k = 0; k < validation.length; k++) {
+				if (validation == "number") {
+					createTd("tdSearch"+collection+object+rule_id,"trSearch"+collection+object,collection+" "+object);
+					createTd("tdInputSearch"+collection+object+rule_id ,"trSearch"+collection+object, "");
+					createTd("tdButtons"+collection+ object, "trSearch"+collection+object, "");
+					document.getElementById("tdInputSearch"+collection+object+rule_id).innerHTML = '<input id="inputSearchAdd' + collection+object+rule_id + '" onKeyUp="javascript:onlyNumber(this); type="text" value="'+inputSearch+'" size="30">';
+					var buttons = '&nbsp&nbsp&nbsp&nbsp<img id="inputSearchAdd' + collection+object+rule_id + '" align="top" style="cursor:pointer" title="Add Parameter" src="images/Add.png" onclick="addFields();"/>&nbsp&nbsp&nbsp&nbsp<img id="trSearch'+ collection+object +'" align="top" style="cursor:pointer" title="Delete Parameter" src="images/Delete.png" onclick="removeElement(this.id);"/>&nbsp&nbsp&nbsp&nbsp<input id="searchBy'+collection+object+'" type="radio"  name="searchBy" value="'+collection+object+'">Result by '+collection+" "+object+'</input>';
+					document.getElementById("tdButtons" +collection+object).innerHTML = buttons;
+				}
+				else{
+					if (validation.length > 0) {
+						if(document.getElementById("tdSelectSearch"+collection+object)==null) {
+							createTd("tdSearch"+collection+object+rule_id,"trSearch"+collection+object,collection+" "+object);
+							createTd("tdSelectSearch" +collection+ object, "trSearch"+collection+object, "");
+							createTd("tdButtons"+collection+ object, "trSearch"+collection+object, "");
+							var str = '<select id="selectSearch' +collection+object +rule_id+ '" onChange=""></select>';
+							document.getElementById("tdSelectSearch" +collection+object).innerHTML = str;
+							var buttons = '&nbsp&nbsp&nbsp&nbsp<img id="selectSearchAdd' + collection+object+rule_id + '" align="top" style="cursor:pointer" title="Add Parameter" src="images/Add.png" onclick="addFields();"/>&nbsp&nbsp&nbsp&nbsp<img id="trSearch'+ collection+object +'" align="top" style="cursor:pointer" title="Delete Parameter" src="images/Delete.png" onclick="removeElement(this.id);"/>&nbsp&nbsp&nbsp&nbsp<input id="searchBy'+collection+object+'" type="radio"  name="searchBy" value="'+collection+object+'">Result by '+collection+" "+object+'</input>';
+							document.getElementById("tdButtons" +collection+object).innerHTML = buttons;
 							var option = document.createElement("option");
-							option.id = "optionSearch"+collection+object + validation[k];
-							option.name = "optionSearch"+collection+object + validation[k];
-							option.value = validation[k];
-							document.getElementById("selectSearch" +collection+object +rule_id).appendChild(option);
-							document.getElementById(option.id).innerHTML = validation[k];
-						}
-						if (inputSearch!="")
-						{
-							document.getElementById("optionSearch"+collection+object+inputSearch).selected = true;
+							option.id = "optionSearch"+collection+object+"optionEmpty";
+							option.value = "";
+							document.getElementById("selectSearch" +collection+object+rule_id).appendChild(option);
+							document.getElementById(option.id).innerHTML = "";
+							for (k = 0; k < validation.length; k++) {
+								var option = document.createElement("option");
+								option.id = "optionSearch"+collection+object + validation[k];
+								option.name = "optionSearch"+collection+object + validation[k];
+								option.value = validation[k];
+								document.getElementById("selectSearch" +collection+object +rule_id).appendChild(option);
+								document.getElementById(option.id).innerHTML = validation[k];
+							}
+							if (inputSearch!="")
+							{
+								document.getElementById("optionSearch"+collection+object+inputSearch).selected = true;
+							}
 						}
 					}
 				}
@@ -527,7 +558,7 @@ contStatements1++;
 				{
 					validation=checkFieldType(j);
 				}
-				if((validation == "text")||(validation=="")||(validation=="date")||(validation=="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation=="textarea")){
+				if((validation == "text")||(validation=="")||(validation=="number")||(validation=="date")||(validation=="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation=="textarea")){
 					if(validation!="textarea"){
 						isGrid=checkIfGrid(ans[i].subject_id);
 						if ((document.getElementById("input"+ans[i].subject+ans[i].object+ans[i].rule_id+variable).value!="")&&(isGrid==true)&&(literal=="literal")) {
@@ -626,7 +657,7 @@ contStatements1++;
 							}
 						}
 						if ( document.getElementById(ans[i].subject+ans[i].object+str+variable)==null) {
-							alert("The option '"+str+"' doesn't exist in database.\nPlease add this option!");
+							alert("The option '"+str+"(collection '"+ans[i].subject+"' rule '"+ans[i].object+"')' doesn't exist in database.\nPlease add this option!");
 						}
 						isGrid=checkIfGrid(ans[i].subject_id);
 						if ((document.getElementById(ans[i].subject+ans[i].object+str+variable).selected!=false)&&(isGrid==true)&&(literal=="literal")) {
@@ -686,16 +717,18 @@ contStatements1++;
 						indexGrid=grid[l].rows.count();
 						for (var m=1; m<indexGrid; m++) {
 							for (var n=0; n<allRules.length; n++) {
-								var validation = allRules[n
-									\].validation;
+								var validation = allRules[n].validation;
 								if (validation=="")
 								{
 									validation=checkFieldType(n);
 								}
 								if ((allRules[n].subject_id==allCollections[k].collection_id)&&(allRules[n].object_id=="")) {
-									if((validation == "text")||(validation=="")||(validation=="date")||(validation=="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation=="textarea"))
+									if((validation == "text")||(validation=="number")||(validation=="")||(validation=="date")||(validation=="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation=="textarea"))
 									{
 										if(validation!="textarea"){
+											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m)==null) {
+												alert("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m);
+											}
 											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m).value!="") {
 												var noDeleteGrid = true;
 											}
@@ -775,8 +808,13 @@ function createGridSearch(ans,i){
 							typeSelect = "date";
 						}
 						else {
-							if (validation.length > 0) {
-								typeSelect = "select";
+							if (validation == "number") {
+								typeSelect = "number";
+							}
+							else{
+								if (validation.length > 0) {
+									typeSelect = "select";
+								}
 							}
 						}
 					}
@@ -791,11 +829,35 @@ function createGridSearch(ans,i){
 					var indexRow = i+1;
 					grid[contGrid].setTextMatrix(i+1,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexRow+'" type="text" value="" onChange="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'');
 				}
+				if (typeSelect == "number") {
+					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
+				}
 				if (typeSelect == "date") {
 					var temp = cleanString(allRules[j].object);
 					var indexRow = i+1;
 					temp = temp+"row"+indexRow;
-					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'mm/dd/yyyy',this)";
+					var formatDate = "";
+					var indexL = "";
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate[l].length; m++) {
+							if (fieldDate[l][m].verb=="domain") {
+								if (fieldDate[l][m].value==allRules[j].rule_id) {
+									indexL = l;
+								}
+							}	
+						}
+					}
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate.length; m++) {
+							if ((l == indexL)&&(fieldDate[l][m].verb=="value")) {
+								formatDate = fieldDate[l][m].value;
+							}
+						}
+					}
+					if (formatDate =="") {
+						formatDate = "mm/dd/yyyy";
+					}
+					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'"+formatDate+"',this)";
 					grid[contGrid].setTextMatrix(i+1,column,'<input id="input' +allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+indexRow+'" type="text" value="" name="' + temp + '" onChange="checkFieldRestrictions(this.id);" '+readonly+'><img  align="top" style="cursor:pointer" src="images/calendar.png" onclick="' + onClickImage + '"/><img id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id +"row"+indexRow+ '" align="top" style="cursor:pointer" src="images/icon-search.PNG" onclick="tabSearch(this.id);"/>');
 				}
 				if (typeSelect == "textArea")

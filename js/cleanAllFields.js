@@ -21,8 +21,13 @@ function cleanAllFields(){
 									typeSelect = "date";
 								}
 								else {
-									if (validation.length > 0) {
-										typeSelect = "select";
+									if (validation == "number") {
+										typeSelect = "number";
+									}
+									else{
+										if (validation.length > 0) {
+											typeSelect = "select";
+										}
 									}
 								}
 							}
@@ -61,6 +66,9 @@ function cleanGrid(typeSelect,allCollections,allRules) {
 }
 function clean(typeSelect,variable,collection,allRules) {
 	if (typeSelect == "text") {
+		if (document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable)==null) {
+			alert("input" + collection.name + allRules.object + allRules.rule_id+variable);
+		}
 		document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable).value="";
 	}
 	if (typeSelect == "date") {
@@ -68,6 +76,9 @@ function clean(typeSelect,variable,collection,allRules) {
 	}
 	if (typeSelect == "textarea") {
 		document.getElementById("inputTextArea"+collection.name + allRules.object + allRules.rule_id+variable).value="";
+	}
+	if (typeSelect == "number") {
+		document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable).value="";
 	}
 	if (typeSelect == "select") {
 		select = document.getElementById(collection.name+allRules.object+"optionEmpty"+variable);
