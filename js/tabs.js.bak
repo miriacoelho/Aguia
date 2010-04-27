@@ -535,9 +535,30 @@ function createFields(collection_id,rule_id) {
 								document.getElementById("tdInput" + allCollections[i].name + allRules[j].object).innerHTML = '<input id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" type="text" value="" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'';
 							}
 							if (typeSelect == "date") {
+								var formatDate = "";
 								var temp = cleanString(allRules[j].object);
+								var indexL = "";
 								createTd("tdInput" +allCollections[i].name+ allRules[j].object, "tr" +allCollections[i].name+ allRules[j].object, "");
-								var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'mm/dd/yyyy',this)";
+								for (var l=0; l<fieldDate.length; l++) {
+									for (var m=0; m<fieldDate[l].length; m++) {
+										if (fieldDate[l][m].verb=="domain") {
+											if (fieldDate[l][m].value==allRules[j].rule_id) {
+												indexL = l;
+											}
+										}	
+									}
+								}
+								for (var l=0; l<fieldDate.length; l++) {
+									for (var m=0; m<fieldDate.length; m++) {
+										if ((l == indexL)&&(fieldDate[l][m]=="value")) {
+											formatDate = fieldDate[l][m].value;
+										}
+									}
+								}
+								if (formatDate =="") {
+									formatDate = "mm/dd/yyyy";
+								}
+								var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'"+formatDate+"',this)";
 								document.getElementById("tdInput" +allCollections[i].name+allRules[j].object).innerHTML = '<input id="input' +allCollections[i].name+allRules[j].object +allRules[j].rule_id+ '" type="text" value="" name="' + temp + '" onChange="checkFieldRestrictions(this.id);" '+readonly+'><img  align="top" style="cursor:pointer" src="images/calendar.png" onclick="' + onClickImage + '"/><img id="input' + allCollections[i].name + allRules[j].object + allRules[j].rule_id + '" align="top" style="cursor:pointer" src="images/icon-search.PNG" onclick="tabSearch(this.id);"/>';
 							}
 							if (typeSelect== "textarea") {
@@ -671,7 +692,28 @@ function createGrid(collection_id,contGrid){
 				if (typeSelect == "date") {
 					var temp = cleanString(allRules[j].object);
 					temp = temp+"row"+indexGrid;
-					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'mm/dd/yyyy',this)";
+					var formatDate = "";
+					var indexL = "";
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate[l].length; m++) {
+							if (fieldDate[l][m].verb=="domain") {
+								if (fieldDate[l][m].value==allRules[j].rule_id) {
+									indexL = l;
+								}
+							}	
+						}
+					}
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate.length; m++) {
+							if ((l == indexL)&&(fieldDate[l][m]=="value")) {
+								formatDate = fieldDate[l][m].value;
+							}
+						}
+					}
+					if (formatDate =="") {
+						formatDate = "mm/dd/yyyy";
+					}
+					var onClickImage = "displayCalendar(document.forms[0]." + temp + ",'"+formatDate+"',this)";
 					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' +allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+indexGrid+'" type="text" value="" name="' + temp + '" onChange="checkFieldRestrictions(this.id);" '+readonly+'><img  align="top" style="cursor:pointer" src="images/calendar.png" onclick="' + onClickImage + '"/><img id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id +"row"+indexGrid+ '" align="top" style="cursor:pointer" src="images/icon-search.PNG" onclick="tabSearch(this.id);"/>');
 				}
 				if (typeSelect == "textArea")
@@ -766,10 +808,12 @@ function checkFieldType(k){
 	{
 		for (var j=0;j<fieldDate.length ;j++ )
 		{
-			if (allRules[k].rule_id==fieldDate[j].value)
-			{
-				optionsField = "date";
-				break;
+			for (var l=0; l<fieldDate[j].length; l++) {
+				if (allRules[k].rule_id==fieldDate[j][l].value)
+				{
+					optionsField = "date";
+					break;
+				}	
 			}
 		}
 	}

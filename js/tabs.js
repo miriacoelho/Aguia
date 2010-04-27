@@ -537,10 +537,22 @@ function createFields(collection_id,rule_id) {
 							if (typeSelect == "date") {
 								var formatDate = "";
 								var temp = cleanString(allRules[j].object);
+								var indexL = "";
 								createTd("tdInput" +allCollections[i].name+ allRules[j].object, "tr" +allCollections[i].name+ allRules[j].object, "");
 								for (var l=0; l<fieldDate.length; l++) {
-									if (fieldDate[l].verb=="value") {
-										formatDate = fieldDate[l].value;
+									for (var m=0; m<fieldDate[l].length; m++) {
+										if (fieldDate[l][m].verb=="domain") {
+											if (fieldDate[l][m].value==allRules[j].rule_id) {
+												indexL = l;
+											}
+										}	
+									}
+								}
+								for (var l=0; l<fieldDate.length; l++) {
+									for (var m=0; m<fieldDate.length; m++) {
+										if ((l == indexL)&&(fieldDate[l][m].verb=="value")) {
+											formatDate = fieldDate[l][m].value;
+										}
 									}
 								}
 								if (formatDate =="") {
@@ -681,9 +693,21 @@ function createGrid(collection_id,contGrid){
 					var temp = cleanString(allRules[j].object);
 					temp = temp+"row"+indexGrid;
 					var formatDate = "";
+					var indexL = "";
 					for (var l=0; l<fieldDate.length; l++) {
-						if (fieldDate[l].verb=="value") {
-							formatDate = fieldDate[l].value;
+						for (var m=0; m<fieldDate[l].length; m++) {
+							if (fieldDate[l][m].verb=="domain") {
+								if (fieldDate[l][m].value==allRules[j].rule_id) {
+									indexL = l;
+								}
+							}	
+						}
+					}
+					for (var l=0; l<fieldDate.length; l++) {
+						for (var m=0; m<fieldDate.length; m++) {
+							if ((l == indexL)&&(fieldDate[l][m].verb=="value")) {
+								formatDate = fieldDate[l][m].value;
+							}
 						}
 					}
 					if (formatDate =="") {
@@ -784,10 +808,12 @@ function checkFieldType(k){
 	{
 		for (var j=0;j<fieldDate.length ;j++ )
 		{
-			if (allRules[k].rule_id==fieldDate[j].value)
-			{
-				optionsField = "date";
-				break;
+			for (var l=0; l<fieldDate[j].length; l++) {
+				if (allRules[k].rule_id==fieldDate[j][l].value)
+				{
+					optionsField = "date";
+					break;
+				}	
 			}
 		}
 	}

@@ -667,7 +667,7 @@ function joinStatementsGUIRules(target) {
 					fieldText = field;
 				break;
 				case "hasDate":
-					fieldDate=field;
+					fieldDate[i]=field;
 				break;
 				case "hasFieldInactive":
 					fieldInactive=field;
