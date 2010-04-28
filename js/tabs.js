@@ -274,7 +274,7 @@ function getAllCollections(collections){
 		found = false;
 		for (var j=0; j<subCollections.length; j++) {
 			for (var k=0; k<subCollections[j].length; k++) {
-				if (subCollections[j][k].verb=="range") {
+				if ((subCollections[j][k].verb=="range")&&(allCollections.length!=1)) {
 					if(allCollections[i].collection_id == subCollections[j][k].value){
 						found = true;
 					}	
@@ -361,30 +361,6 @@ function getRules(){
 	var readonlyInputAndDate="";
 	var readonlyTextAreaAndSelect=false;
 	lengthInitName = initName.length;
-	// Order subCollections
-	var subCollectionsOrder = new Array();
-	var index = 0;
-	for (var i=0; i<allCollections.length; i++) {
-		for (var j=0; j<subCollections.length; j++) {
-			for (var k=0; k<subCollections[j].length; k++) {
-				if (subCollections[j][k].verb=="range") {
-					if (subCollections[j][k].value==allCollections[i].collection_id) {
-						subCollectionsOrder[index]=subCollections[j][k];
-						index++;
-					}
-				}
-			}
-		}
-	}
-	var index = 0;
-	for (var i=0; i<subCollections.length; i++) {
-		for (var j=0; j<subCollections[i].length; j++) {
-			if ((subCollections[i][j].verb=="range")&&(subCollectionsOrder!="")) {
-				subCollections[i][j] = subCollectionsOrder[index];
-				index++;
-			}
-		}
-	}
 	for (var i = 0; i < allCollections.length; i++) {
 		var index = 0;
 		var initId1= new Array();
@@ -392,7 +368,7 @@ function getRules(){
 		var initName1 = new Array();
 		for (var j = 0; j < subCollections.length; j++) {
 			for (var k=0; k<subCollections[j].length; k++) {
-				if (subCollections[j][k].verb=="domain") {
+				if ((subCollections[j][k].verb=="domain")) {
 					if (allCollections[i].collection_id == subCollections[j][k].value) {
 						for (var l=0; l<subCollections[j].length; l++) {
 							if (subCollections[j][l].verb=="range") {
