@@ -18,9 +18,6 @@ var indiceArrayTree = 0;
 var grid = new Array();
 var indexGrid = 0;
  function selectCollection(target) {
-	 allRules = orderRules(allRules);
-	allRules=removeNumberRules(allRules);
-	allRules = removeNumberSubject(allRules);
 	var img = document.createElement("img");
 	img.id = "imgLogo";
 	img.src="images/mdacclog.bmp";
@@ -60,7 +57,6 @@ var indexGrid = 0;
 		window.location.href = url[0];
 	 }
 	 else{
-		ans=removeNumber(ans);
 		removeElement("tableSelectProject");
 		removeElement("imgProjectsSmall");
 		removeElement("imgProjects");
@@ -75,11 +71,30 @@ var indexGrid = 0;
 		createDiv("divTree","body","dTree");
 		d = new dTree('dCollections');
 		d.add(0,-1,"Select a Collection");
+		var subCollectionsTree = new Array();
+		ans= order(ans);
+		ans=removeNumber(ans);
 		for (var i=0; i<ans.length; i++) {
-			if (ans[i].name!="s3dbVerb") {
+			for (var j=0; j<subCollections.length; j++) {
+				for (var k=0; k<subCollections[j].length; k++) {
+					if ((subCollections[j][k].verb=="range")) {
+						if(ans[i].collection_id == subCollections[j][k].value){
+							subCollectionsTree[index] = ans[i].name;
+							index++;
+						}	
+					}	
+				}
+			}	
+		}
+		var found = false;
+		var collectionsTree = new Array();
+		var index1 = 0;
+		for (var i=0; i<ans.length; i++) {
+			if ((ans[i].name!="s3dbVerb")) {
 				d.add(i+1,0,"<a id='font"+i+"'style='cursor:pointer' title='"+ans[i].name+"' onmouseover='textDecorationUnderline(this.id);' onmouseout='textDecorationNone(this.id);' onclick='queryCollectionsAssociated("+ans[i].collection_id+")'>"+ans[i].name+"</a>");
 			}
-		}
+			found = false;
+		}			
 		createP("pTree",'<a href="javascript: d.openAll();">Expand all</a> | <a href="javascript: d.closeAll();">Collapse all</a>',"divTree");
 		setStyle("divTree","absolute","280px","","","190px");
 		document.getElementById("divTree").innerHTML=d;	
@@ -100,6 +115,9 @@ var indexGrid = 0;
 	}
 	var key = document.getElementById("key").value;
 	allRulesFixed = ans;
+	allRulesFixed = orderRules(allRulesFixed);
+	allRulesFixed=removeNumberRules(allRulesFixed);
+	allRulesFixed = removeNumberSubject(allRulesFixed);
 	removeElement("loading");
 	if (target!=null) {
 		urlQuery=url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>collection_id</select><from>collections</from><where><collection_id>'+target.COLLECTIONDATA+'</collection_id></where></S3QL>';

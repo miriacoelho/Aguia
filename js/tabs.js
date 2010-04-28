@@ -57,7 +57,6 @@ var indexGrid = 0;
 		window.location.href = url[0];
 	 }
 	 else{
-		ans=removeNumber(ans);
 		removeElement("tableSelectProject");
 		removeElement("imgProjectsSmall");
 		removeElement("imgProjects");
@@ -72,11 +71,16 @@ var indexGrid = 0;
 		createDiv("divTree","body","dTree");
 		d = new dTree('dCollections');
 		d.add(0,-1,"Select a Collection");
+		var subCollectionsTree = new Array();
+		ans= order(ans);
+		ans=removeNumber(ans);
+		var found = false;
 		for (var i=0; i<ans.length; i++) {
-			if (ans[i].name!="s3dbVerb") {
+			if ((ans[i].name!="s3dbVerb")) {
 				d.add(i+1,0,"<a id='font"+i+"'style='cursor:pointer' title='"+ans[i].name+"' onmouseover='textDecorationUnderline(this.id);' onmouseout='textDecorationNone(this.id);' onclick='queryCollectionsAssociated("+ans[i].collection_id+")'>"+ans[i].name+"</a>");
 			}
-		}
+			found = false;
+		}			
 		createP("pTree",'<a href="javascript: d.openAll();">Expand all</a> | <a href="javascript: d.closeAll();">Collapse all</a>',"divTree");
 		setStyle("divTree","absolute","280px","","","190px");
 		document.getElementById("divTree").innerHTML=d;	
@@ -97,6 +101,9 @@ var indexGrid = 0;
 	}
 	var key = document.getElementById("key").value;
 	allRulesFixed = ans;
+	allRulesFixed = orderRules(allRulesFixed);
+	allRulesFixed=removeNumberRules(allRulesFixed);
+	allRulesFixed = removeNumberSubject(allRulesFixed);
 	removeElement("loading");
 	if (target!=null) {
 		urlQuery=url+'/S3QL.php?query=<S3QL><key>'+key+'</key><select>collection_id</select><from>collections</from><where><collection_id>'+target.COLLECTIONDATA+'</collection_id></where></S3QL>';
@@ -354,9 +361,6 @@ function createTabMain(ans,classCss){
 	return false;
 }
 function getRules(){
-	allRules = orderRules(allRules);
-	allRules=removeNumberRules(allRules);
-	allRules = removeNumberSubject(allRules);
 	var createSubTabs=false;
 	var readonlyInputAndDate="";
 	var readonlyTextAreaAndSelect=false;
