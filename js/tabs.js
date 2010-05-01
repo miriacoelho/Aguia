@@ -68,22 +68,80 @@ var indexGrid = 0;
 		removeElement("pTextHelp4");
 		removeElement("helpProjects");
 		removeElement("pTextSelectProjects");
-		createDiv("divTree","body","dTree");
-		d = new dTree('dCollections');
-		d.add(0,-1,"Select a Collection");
-		var subCollectionsTree = new Array();
+		createTable("tableCollectionTree","body","tbodyCollection");
+		createTr("trTree", "tbodyCollection");
+		createDiv("divTree","trTree","dTree");
+		dCollection = new dTree('dCollection');
+		dCollection.add(0,-1,"Select a Collection");
 		ans= order(ans);
 		ans=removeNumber(ans);
 		var found = false;
+		var collectionTree = new Array();
+		var arrayCollectionTree = 0;
 		for (var i=0; i<ans.length; i++) {
-			if ((ans[i].name!="s3dbVerb")) {
-				d.add(i+1,0,"<a id='font"+i+"'style='cursor:pointer' title='"+ans[i].name+"' onmouseover='textDecorationUnderline(this.id);' onmouseout='textDecorationNone(this.id);' onclick='queryCollectionsAssociated("+ans[i].collection_id+")'>"+ans[i].name+"</a>");
+			for (var j=0; j<subCollections.length; j++) {
+				for (var k=0; k<subCollections[j].length; k++) {
+					if ((subCollections[j][k].verb=="range")) {
+						if(ans[i].collection_id == subCollections[j][k].value){
+							found = true;
+						}
+					}
+				}
+			}
+			if ((found ==false)&&(ans[i].name!="s3dbVerb")) {
+				collectionTree[arrayCollectionTree] = ans[i].collection_id;
+				dCollection.add(arrayCollectionTree+1,0,"<a id='font"+i+"'style='cursor:pointer' title='"+ans[i].name+"' onmouseover='textDecorationUnderline(this.id);' onmouseout='textDecorationNone(this.id);' onclick='queryCollectionsAssociated("+ans[i].collection_id+")'>"+ans[i].name+"</a>");
+				arrayCollectionTree++;
 			}
 			found = false;
-		}			
-		createP("pTree",'<a href="javascript: d.openAll();">Expand all</a> | <a href="javascript: d.closeAll();">Collapse all</a>',"divTree");
-		setStyle("divTree","absolute","280px","","","190px");
-		document.getElementById("divTree").innerHTML=d;	
+		}		
+		// Organizing sub-collections tree
+		var subCollectionsTree = new Array();
+		var mainCollection = new Array();
+		var indexMain = 0;
+		var index = -1;
+		var index1 = 0;
+		for (var i=0; i<ans.length; i++) {
+			for (var j=0; j<subCollections.length; j++) {
+				for (var k=0; k<subCollections[j].length; k++) {
+					if ((subCollections[j][k].verb=="domain")) {
+						if(ans[i].collection_id == subCollections[j][k].value){
+							mainCollection[indexMain]=subCollections[j][k].value;
+							indexMain++;
+							index++;
+							index1=0;
+							subCollectionsTree[index] = new Array;
+							for (var l=0; l<subCollections[j].length; l++) {
+								if (subCollections[j][l].verb=="range") {
+									subCollectionsTree[index][index1]=subCollections[j][l].value;
+									index1++;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		var lengthTreeCollections = collectionTree.length;
+		for (var i=0; i<collectionTree.length; i++) {
+			for (var j=0; j<mainCollection.length; j++) {
+				if (mainCollection[j]==collectionTree[i]) {
+					for (var k=0; k<subCollectionsTree[j].length; k++) {
+						for (var l=0; l<ans.length; l++) {
+							if (ans[l].collection_id==subCollectionsTree[j][k]) {
+								dCollection.add(lengthTreeCollections,i+1,"<a id='font"+l+"'style='cursor:pointer' title='"+ans[l].name+"' onmouseover='textDecorationUnderline(this.id);' onmouseout='textDecorationNone(this.id);' onclick='queryCollectionsAssociated("+ans[l].collection_id+")'>"+ans[l].name+"</a>");
+								lengthTreeCollections++;
+								break;
+							}
+						}
+					}
+				}
+			}	
+		}
+		createTr("trTreeExpand", "tbodyCollection");
+		createP("pTree",'<a href="javascript: dCollection.openAll();">Expand all</a> | <a href="javascript: dCollection.closeAll();">Collapse all</a>',"trTreeExpand");
+		setStyle("tableCollectionTree","absolute","280px","","","190px");
+		document.getElementById("divTree").innerHTML=dCollection;	
 		queryAllRules(target);
 	 }
  }
