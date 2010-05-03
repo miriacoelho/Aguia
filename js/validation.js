@@ -21,26 +21,26 @@ function validationData(){
 			return false;
 		}
 	}
-	var autority = document.getElementById("selectAutentication").value;
-	if (autority == "")
+	var authority = document.getElementById("selectAutentication").value;
+	if (authority == "")
 	{
-		alert("Please, enter autority");
+		alert("Please, enter authority");
 	}
 	else{
 		whatURL="url";
 		s3db_check_url(url);
-		if (autority == "mdanderson")
+		if (authority == "mdanderson")
 		{
 			urlKey = url+"/apilogin.php?username="+username+"&password="+password+"&authority=mdanderson";
 			username="mdanderson:"+username;
 		}
 		else{
-			if (autority =="google") {
+			if (authority =="google") {
 				urlKey = url+"/apilogin.php?username="+username+"&password="+password+"&authority=google";
 				username="google:"+username;
 			}
 			else{
-				if (autority == "S3DB")
+				if (authority == "S3DB")
 				{
 					urlKey = url+"/apilogin.php?username="+username+"&password="+password;
 				}

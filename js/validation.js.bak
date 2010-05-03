@@ -130,6 +130,6 @@ function removeElement(id){
 }
 function removeLoginPHP(str){
 	var tmp="";
-	tmp = str.split(/[/login.php]*$/);
+	tmp = str.split(/login.php/);
 	return tmp;
 }
