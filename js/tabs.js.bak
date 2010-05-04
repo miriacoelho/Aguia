@@ -70,7 +70,7 @@ var indexGrid = 0;
 		removeElement("pTextSelectProjects");
 		createTable("tableCollectionTree","body","tbodyCollection");
 		createTr("trTree", "tbodyCollection");
-		createDiv("divTree","trTree","dTree");
+		createTd("tdTree","trTree","");
 		dCollection = new dTree('dCollection');
 		dCollection.add(0,-1,"Select a Collection");
 		ans= order(ans);
@@ -139,9 +139,10 @@ var indexGrid = 0;
 			}	
 		}
 		createTr("trTreeExpand", "tbodyCollection");
-		createP("pTree",'<a href="javascript: dCollection.openAll();">Expand all</a> | <a href="javascript: dCollection.closeAll();">Collapse all</a>',"trTreeExpand");
+		createTr("tdTreeExpand", "trTreeExpand","");
+		createP("pTree",'<a href="javascript: dCollection.openAll();">Expand all</a> | <a href="javascript: dCollection.closeAll();">Collapse all</a>',"tdTreeExpand");
 		setStyle("tableCollectionTree","absolute","280px","","","190px");
-		document.getElementById("divTree").innerHTML=d1;	
+		document.getElementById("tdTree").innerHTML=dCollection;	
 		queryAllRules(target);
 	 }
  }

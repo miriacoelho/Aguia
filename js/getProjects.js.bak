@@ -21,6 +21,7 @@ var moreFields=new Array();
 var subCollections = new Array();
 var fieldNumber = new Array();
 function queryProjects(){
+	removeElement("pPublic");
 	removeElement("tableLogin");
 	removeElement("imgLogin");
 	removeElement("pTextLogin");
@@ -422,12 +423,17 @@ function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target)
 }
 function getActions(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
 	allActions = ans;
-	if (ans[0].error_code>0) {
-		alert("An unexpected error occurred on the server, please try again later!");
-		window.location.href = window.location.href;
+	if (ans[0]!=undefined) {
+		if (ans[0].error_code>0) {
+			alert("An unexpected error occurred on the server, please try again later!");
+			window.location.href = window.location.href;
+		}
+	}
+	else{
+		//selectCollection(target);
 	}
 	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>*</select><from>rules</from><where><project_id>'+idProjectRules+'</project_id><subject>GUI rules</subject></where></S3QL>';
-	s3db_jsonpp_call(urlQuery,'getAllRulesGUIAction(ans,"'+urlGUIProjects+'","'+keyGUIProjects+'",'+JSON.stringify(target)+')');
+	s3db_jsonpp_call(urlQuery,'getAllRulesGUIAction(ans,"'+urlGUIProjects+'","'+keyGUIProjects+'",'+JSON.stringify(target)+')');		
 }
 function getAllRulesGUIAction(ans,urlGUIProjects,keyGUIProjects,target) {
 	if (ans[0].error_code>0) {
@@ -667,7 +673,7 @@ function joinStatementsGUIRules(target) {
 					fieldText = field;
 				break;
 				case "hasDate":
-					fieldDate=field;
+					fieldDate[i]=field;
 				break;
 				case "hasFieldInactive":
 					fieldInactive=field;

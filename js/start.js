@@ -191,6 +191,13 @@ function start(){
 	createTd("tdButton","trButton","");
 	document.getElementById("tdButton").appendChild(inputButton);
 	document.getElementById("tdButton").align="right";
+	createP("pPublic",'Note: There is a public login. To login as public, please use "public" as username and "public" as password.',"body");
+	setStyle("pPublic","absolute","","","","400px");
+	document.getElementById("pPublic").style.maxWidth = "480px";
+	document.getElementById("pPublic").align = "center";
+	document.getElementById("pPublic").style.font="italic 13px arial,serif";
+	document.getElementById("pPublic").style.fontWeight="900";
+	document.getElementById("pPublic").style.color = "#000000";
 	return false;
 }
 function help() {
