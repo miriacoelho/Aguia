@@ -20,10 +20,10 @@ var indexGrid = 0;
  function selectCollection(target) {
 	var img = document.createElement("img");
 	img.id = "imgLogo";
-	img.src="images/mdacclog.bmp";
+	img.src="images/mdacclogo.png";
 	img.border=2;
 	document.body.appendChild(img);	
-	setStyle("imgLogo","absolute","163px","86px","10px","28px");
+	setStyle("imgLogo","absolute","158px","87px","10px","28px");
 	setStyle("imgAguia","absolute","","","40%","05px");
 	setStyle("pTextLogo","absolute","600px","","32%","80px");
 	document.getElementById("pTextLogo").style.font="italic bold 18px arial,serif";
