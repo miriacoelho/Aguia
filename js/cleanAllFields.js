@@ -67,20 +67,37 @@ function cleanGrid(typeSelect,allCollections,allRules) {
 function clean(typeSelect,variable,collection,allRules) {
 	if (typeSelect == "text") {
 		if (document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable)==null) {
-			alert("input" + collection.name + allRules.object + allRules.rule_id+variable);
+			alert("Please check if you doens't have two or more rules with the same object!");
+			removeElement("loading");
 		}
 		document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable).value="";
 	}
 	if (typeSelect == "date") {
+		if (document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable)==null) {
+			alert("Please check if you doens't have two or more rules with the same object!");
+			removeElement("loading");
+		}
 		document.getElementById("input" +collection.name+allRules.object + allRules.rule_id+variable).value="";
 	}
 	if (typeSelect == "textarea") {
+		if (document.getElementById("inputTextArea" + collection.name + allRules.object + allRules.rule_id+variable)==null) {
+			alert("Please check if you doens't have two or more rules with the same object!");
+			removeElement("loading");
+		}
 		document.getElementById("inputTextArea"+collection.name + allRules.object + allRules.rule_id+variable).value="";
 	}
 	if (typeSelect == "number") {
+		if (document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable)==null) {
+			alert("Please check if you doens't have two or more rules with the same object!");
+			removeElement("loading");
+		}
 		document.getElementById("input" + collection.name + allRules.object + allRules.rule_id+variable).value="";
 	}
 	if (typeSelect == "select") {
+		if (document.getElementById(collection.name+allRules.object+"optionEmpty"+variable)==null) {
+			alert("Please check if you doens't have two or more rules with the same object!");
+			removeElement("loading");
+		}
 		select = document.getElementById(collection.name+allRules.object+"optionEmpty"+variable);
 		select.selected = true;
 	}	
