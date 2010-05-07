@@ -20,7 +20,7 @@ var indexGrid = 0;
  function selectCollection(target) {
 	var img = document.createElement("img");
 	img.id = "imgLogo";
-	img.src="images/mdacclogo.bmp";
+	img.src="images/mdacclog.bmp";
 	img.border=2;
 	document.body.appendChild(img);	
 	setStyle("imgLogo","absolute","158px","87px","10px","28px");
