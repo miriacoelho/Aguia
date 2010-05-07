@@ -124,7 +124,7 @@ function createField(rule_id,inputSearch){
 					for (var l=0; l<fieldDate.length; l++) {
 						for (var m=0; m<fieldDate[l].length; m++) {
 							if (fieldDate[l][m].verb=="domain") {
-								if (fieldDate[l][m].value==allRules[j].rule_id) {
+								if (fieldDate[l][m].value==rule_id) {
 									indexL = l;
 								}
 							}	
@@ -726,9 +726,6 @@ contStatements1++;
 									if((validation == "text")||(validation=="number")||(validation=="")||(validation=="date")||(validation=="(0[1-9]|1[012])/(0[1-9]|[12][0-9]|3[01])/[12][0-9]{3}")||(validation=="textarea"))
 									{
 										if(validation!="textarea"){
-											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m)==null) {
-												alert("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m);
-											}
 											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m).value!="") {
 												var noDeleteGrid = true;
 											}

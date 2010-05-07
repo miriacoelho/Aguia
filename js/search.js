@@ -727,7 +727,8 @@ contStatements1++;
 									{
 										if(validation!="textarea"){
 											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m)==null) {
-												alert("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m);
+												alert("Please check if your collection doens't have two or more rules with the same object!!");
+												removeElement("loading");
 											}
 											if (document.getElementById("input"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m).value!="") {
 												var noDeleteGrid = true;
@@ -735,6 +736,10 @@ contStatements1++;
 										}
 										else{
 											if (validation=="textarea") {
+												if (document.getElementById("inputTextArea"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m)==null) {
+													alert("Please check if your collection doens't have two or more rules with the same object!!");
+													removeElement("loading");
+												}
 												if (document.getElementById("inputTextArea"+allRules[n].subject+allRules[n].object+allRules[n].rule_id+"row"+m).value!="") {
 													var noDeleteGrid = true;
 												}
@@ -743,6 +748,10 @@ contStatements1++;
 									}
 									else{
 										if ((validation.length>0)) {
+											if (document.getElementById(allRules[n].subject+allRules[n].object+"optionEmpty"+"row"+m)==null) {
+												alert("Please check if your collection doens't have two or more rules with the same object!!");
+												removeElement("loading");
+											}
 											var select = document.getElementById(allRules[n].subject+allRules[n].object+"optionEmpty"+"row"+m);
 											if (select.selected=="false") {
 												var noDeleteGrid = true;

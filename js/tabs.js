@@ -960,7 +960,7 @@ function removeNumberRules(tmp){
 	for (i = 0; i < tmp.length; i++) {
 		if (tmp[i].object!=null)
 		{
-			var founded = tmp[i].object.search(/[0-9][0-9]_/);
+			var founded = tmp[i].object.search(/^[0-9][0-9]_/);
 			if (founded!=-1)
 			{
 				tmp[i].object = tmp[i].object.slice(3);
@@ -973,7 +973,7 @@ function removeNumberSubject(tmp){
 	for (i = 0; i < tmp.length; i++) {
 		if (tmp[i].subjct!=null)
 		{
-			var founded = tmp[i].subject.search(/[0-9][0-9]_/);
+			var founded = tmp[i].subject.search(/^[0-9][0-9]_/);
 			if (founded!=-1)
 			{
 				tmp[i].subject = tmp[i].subject.slice(3);
