@@ -701,7 +701,7 @@ contStatements1++;
 			}
 		}
 	}	
-	if (contStatements1==contStatements)
+	if (contStatements1==contStatements-1)
 	{
 		checkFieldRestrictions("","");
 		arrayInsertUpdate.length = 0;
