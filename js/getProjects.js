@@ -389,7 +389,7 @@ function getCollectionsRules(urlGUIProjects,keyGUIProjects,target) {
 	else{
 		idProjectRules = document.getElementById("getRulesProjects").value;
 	}
-	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>*</select><from>collections</from><where><project_id>'+idProjectRules+'</project_id><name>GUI action</name></where></S3QL>';
+	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>collection_id</select><from>collections</from><where><project_id>'+idProjectRules+'</project_id><name>GUI action</name></where></S3QL>';
 	s3db_jsonpp_call(urlQuery,'getIDGUIAction(ans,"'+idProjectRules+'","'+urlGUIProjects+'","'+keyGUIProjects+'",'+JSON.stringify(target)+')');
 }
 function getIDGUIAction(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
@@ -429,7 +429,7 @@ function getActions(ans,idProjectRules,urlGUIProjects,keyGUIProjects,target) {
 			window.location.href = window.location.href;
 		}
 	}
-	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>*</select><from>rules</from><where><project_id>'+idProjectRules+'</project_id><subject>GUI rules</subject></where></S3QL>';
+	var urlQuery = urlGUIProjects+'/S3QL.php?query=<S3QL><key>'+keyGUIProjects+'</key><select>rule_id,verb</select><from>rules</from><where><project_id>'+idProjectRules+'</project_id><subject>GUI rules</subject></where></S3QL>';
 	s3db_jsonpp_call(urlQuery,'getAllRulesGUIAction(ans,"'+urlGUIProjects+'","'+keyGUIProjects+'",'+JSON.stringify(target)+')');		
 }
 function getAllRulesGUIAction(ans,urlGUIProjects,keyGUIProjects,target) {
