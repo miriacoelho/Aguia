@@ -126,7 +126,7 @@ function condictionsField1(receiveValue,id,hasGrid) {
 	if (receiveValue!="")
 	{
 		for (var i=0; i<conditions.length; i++) {
-			if (conditions[i].verb=="valueTest") {
+			if (conditions[i].verb=="trigger") {
 				if (receiveValue==conditions[i].value) {
 					tmp = true;
 					for (var j=0; j<conditions.length; j++) {
@@ -135,7 +135,7 @@ function condictionsField1(receiveValue,id,hasGrid) {
 								if (allRules[k].rule_id==conditions[j].value) {
 									var validation = searchSelect(allRules[j].validation);
 									for (var l=0; l<conditions.length; l++) {
-										if (conditions[l].verb=="trigger") {
+										if (conditions[l].verb=="value") {
 											inactive(k,conditions[l].value,"",hasGrid);
 										}
 									}
@@ -277,7 +277,7 @@ function restrictionActive(id){
 }
 function checkFieldRestrictions1(receiveValue,id,hasGrid){
 	for (var i=0; i<restrictions.length; i++) {
-		if (restrictions[i].verb=="valueTest") {
+		if (restrictions[i].verb=="trigger") {
 			if (receiveValue==restrictions[i].value) {
 				for (var j=0; j<restrictions.length; j++) {
 					if (restrictions[j].verb=="range") {
@@ -323,12 +323,14 @@ function formula(optionsFormula,id){
 				}
 				number = number1;
 			}
+			var foundRule = false;
 			for (var j=0;j<number.length ;j++)
 			{
 				for (var w=0;w<allRules.length ;w++ )
 				{
 					if (allRules[w].rule_id==number[j])
 					{
+						var foundRule = true;
 						var isGrid=checkIfGrid(allRules[w].subject_id);
 						if (isGrid==true)
 						{
@@ -380,6 +382,7 @@ function formula(optionsFormula,id){
 						}
 					}
 				}
+				foundRule=false;
 				if (found == false)
 				{
 					if (number[j]=="dateToday") {
@@ -394,7 +397,7 @@ function formula(optionsFormula,id){
 							valueDate="";
 					}
 					else{
-						valueInput[j]=number[j];
+						valueInput[j]=number[j];	
 					}
 				}
 				found = false;
@@ -443,6 +446,11 @@ function formula1(number,valueInput,validationDate,hasGrid,indexLala,verifyInput
 	//var length = number.length;
 	for (var j=0;j<valueInput.length-1 ;j++ )
 	{
+		for (var k=0; k<allRulesFixed.length; k++) {
+			if (valueInput[j]==allRulesFixed[k].rule_id) {
+				valueInput[j]=="";
+			}
+		}
 		if (valueInput[j]=="")
 		{
 			verifyInputNull=true;

@@ -323,12 +323,14 @@ function formula(optionsFormula,id){
 				}
 				number = number1;
 			}
+			var foundRule = false;
 			for (var j=0;j<number.length ;j++)
 			{
 				for (var w=0;w<allRules.length ;w++ )
 				{
 					if (allRules[w].rule_id==number[j])
 					{
+						var foundRule = true;
 						var isGrid=checkIfGrid(allRules[w].subject_id);
 						if (isGrid==true)
 						{
@@ -380,6 +382,7 @@ function formula(optionsFormula,id){
 						}
 					}
 				}
+				foundRule=false;
 				if (found == false)
 				{
 					if (number[j]=="dateToday") {
@@ -394,7 +397,7 @@ function formula(optionsFormula,id){
 							valueDate="";
 					}
 					else{
-						valueInput[j]=number[j];
+						valueInput[j]=number[j];	
 					}
 				}
 				found = false;
@@ -443,6 +446,11 @@ function formula1(number,valueInput,validationDate,hasGrid,indexLala,verifyInput
 	//var length = number.length;
 	for (var j=0;j<valueInput.length-1 ;j++ )
 	{
+		for (var k=0; k<allRulesFixed.length; k++) {
+			if (valueInput[j]==allRulesFixed[k].rule_id) {
+				valueInput[j]="";
+			}
+		}
 		if (valueInput[j]=="")
 		{
 			verifyInputNull=true;
