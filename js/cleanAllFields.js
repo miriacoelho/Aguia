@@ -51,15 +51,19 @@ function cleanGrid(typeSelect,allCollections,allRules) {
 	{
 		for (var l=0;l<grid.length ;l++ )
 		{
-			var sizeRowsGrid = grid[l].rows.count();
-			for (var j=1;j<sizeRowsGrid-1 ;j++ )
-			{
-				grid[l].rows.remove(grid[l].rows.count()-1);
-			}
-			for (var m=1;m<grid[l].rows.count() ;m++ )
-			{
-				var variable = "row"+m;
-				clean(typeSelect,variable,allCollections,allRules);
+			if (grid[l].collection_name==allCollections.name) {
+				var sizeRowsGrid = grid[l].rows.count();
+				if (sizeRowsGrid>1) {
+					for (var j=1;j<sizeRowsGrid-1 ;j++ )
+					{
+						grid[l].rows.remove(grid[l].rows.count()-1);
+					}
+					for (var m=1;m<grid[l].rows.count() ;m++ )
+					{
+						var variable = "row"+m;
+						clean(typeSelect,variable,allCollections,allRules);
+					}
+				}
 			}
 		}
 	}
