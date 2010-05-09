@@ -701,7 +701,7 @@ contStatements1++;
 			}
 		}
 	}	
-	if (contStatements1==contStatements)
+	if (contStatements1==contStatements-1)
 	{
 		checkFieldRestrictions("","");
 		arrayInsertUpdate.length = 0;
@@ -805,13 +805,13 @@ function createGridSearch(ans,i){
 							typeSelect = "date";
 						}
 						else {
-							if (validation == "number") {
-								typeSelect = "number";
-							}
-							else{
+							//if (validation == "number") {
+								//typeSelect = "number";
+							//}
+							//else{
 								if (validation.length > 0) {
 									typeSelect = "select";
-								}
+								//}
 							}
 						}
 					}
@@ -826,9 +826,9 @@ function createGridSearch(ans,i){
 					var indexRow = i+1;
 					grid[contGrid].setTextMatrix(i+1,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexRow+'" type="text" value="" onChange="checkFieldRestrictions(this.id);" name="" '+readonly+' '+search+'');
 				}
-				if (typeSelect == "number") {
-					grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
-				}
+				//if (typeSelect == "number") {
+				//	grid[contGrid].setTextMatrix(indexGrid,column,'<input id="input' + allRules[j].subject + allRules[j].object + allRules[j].rule_id+"row"+indexGrid+'" type="text" onKeyUp="javascript:onlyNumber(this);" onblur="checkFieldRestrictions(this.id);" value="" name="" '+readonly+' '+search+'');
+				//}
 				if (typeSelect == "date") {
 					var temp = cleanString(allRules[j].object);
 					var indexRow = i+1;
