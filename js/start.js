@@ -162,7 +162,7 @@ function start(){
 	document.getElementById("tdURL").style.color = "#FFFFFF";
 	document.getElementById("tdURL").height="35px";
 	createTd("tdInputURL","trURL","");
-	createInput("inputURL","text","","tdInputURL");
+	createInput("inputURL","text","http://ibl.mdanderson.org/edu","tdInputURL");
 	createTr("trUsername","tbodyLogin");
 	createTd("tdUsername","trUsername","Username");
 	document.getElementById("tdUsername").style.font="bold 14px arial,serif";

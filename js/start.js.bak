@@ -195,7 +195,7 @@ function start(){
 	setStyle("pPublic","absolute","","","","400px");
 	document.getElementById("pPublic").style.maxWidth = "480px";
 	document.getElementById("pPublic").align = "center";
-	document.getElementById("pPublic").style.font="italic bold 13px arial,serif";
+	document.getElementById("pPublic").style.font="italic 13px arial,serif";
 	document.getElementById("pPublic").style.fontWeight="900";
 	document.getElementById("pPublic").style.color = "#000000";
 	return false;
