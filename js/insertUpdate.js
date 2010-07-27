@@ -256,24 +256,26 @@ function insertStatements(ans) {
 					//Quantos campos tem?
 					var insertAssociations = "";
 					var item_id = 0;
-					insertAssociations=document.getElementById("tbodySelectItems"+allCollections[j].name).childNodes;
-					for (var k=0; k<insertAssociations.length; k++) {
-						var tmp=insertAssociations[k].id.split("trSelectItems");
-						if (tmp[1]!="") {
-							tmp = tmp[1];
-						}
-						else{
-							tmp = tmp[0];
-						}
-						item_id = document.getElementById("selectItems"+tmp).value;
-						if (item_id!="") {
-							for (var q=0; q<allRules.length; q++) {
-								if ((allRules[q].subject_id==collectionReference)&&(allRules[q].object_id==collectionsAssociated[i])) {
-									urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[q].rule_id+'</rule_id><item_id>'+ans[0].item_id+'</item_id><value>'+item_id+'</value></where></S3QL>';
-									controlInsert++;
-									s3db_jsonpp_call(urlQuery,"confirmInsertions(ans)");	
-								}
-							}	
+					if (document.getElementById("tbodySelectItems"+allCollections[j].name)!=null) {
+						insertAssociations=document.getElementById("tbodySelectItems"+allCollections[j].name).childNodes;
+						for (var k=0; k<insertAssociations.length; k++) {
+							var tmp=insertAssociations[k].id.split("trSelectItems");
+							if (tmp[1]!="") {
+								tmp = tmp[1];
+							}
+							else{
+								tmp = tmp[0];
+							}
+							item_id = document.getElementById("selectItems"+tmp).value;
+							if (item_id!="") {
+								for (var q=0; q<allRules.length; q++) {
+									if ((allRules[q].subject_id==collectionReference)&&(allRules[q].object_id==collectionsAssociated[i])) {
+										urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[q].rule_id+'</rule_id><item_id>'+ans[0].item_id+'</item_id><value>'+item_id+'</value></where></S3QL>';
+										controlInsert++;
+										s3db_jsonpp_call(urlQuery,"confirmInsertions(ans)");	
+									}
+								}	
+							}
 						}
 					}
 				}
