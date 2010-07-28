@@ -186,6 +186,7 @@ function save(){
 	}
 }
 function insert() {
+	var notes = prompt("Type an identifier to the new registry. If leave blank or click in cancel a value default will be set. This identifier will help you associate it with main collection.");
 	if (arrayInsertUpdate.length==0) {
 		alert("You don't have nothing to insert!");
 	}
@@ -198,7 +199,12 @@ function insert() {
 			//Insert item collectionReference first
 			if (allCollections[i].collection_id==collectionReference) {
 			//if grid insert two or more items
+			if ((notes!=null)&& (notes!="")) {
+				urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>item</insert><where><collection_id>'+allCollections[i].collection_id+'</collection_id><notes>'+notes+'</notes></where></S3QL>';
+			}
+			else{
 				urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>item</insert><where><collection_id>'+allCollections[i].collection_id+'</collection_id></where></S3QL>';
+			}
 				s3db_jsonpp_call(urlQuery,'insertStatements(ans)');
 			}
 		}
