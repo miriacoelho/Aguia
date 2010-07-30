@@ -303,7 +303,7 @@ function confirmInsertions(ans) {
 	}
 }
 function update() {
-	if (arrayInsertUpdate.length==0) {
+	if ((arrayInsertUpdate.length==0)&&(arrayCollectionsAssociatedUpdate.length==0)) {
 		alert("You don't have nothing to update!");
 	}
 	else{
@@ -421,24 +421,26 @@ function confirmDeletions(ans,item_id1) {
 						//Quantos campos tem?
 						var insertAssociations = "";
 						var item_id = 0;
-						insertAssociations=document.getElementById("tbodySelectItems"+allCollections[j].name).childNodes;
-						for (var k=0; k<insertAssociations.length; k++) {
-							var tmp=insertAssociations[k].id.split("trSelectItems");
-							if (tmp[1]!="") {
-								tmp = tmp[1];
-							}
-							else{
-								tmp = tmp[0];
-							}
-							item_id = document.getElementById("selectItems"+tmp).value;
-							if (item_id!="") {
-								for (var q=0; q<allRules.length; q++) {
-									if ((allRules[q].subject_id==collectionReference)&&(allRules[q].object_id==collectionsAssociated[i])) {
-										urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[q].rule_id+'</rule_id><item_id>'+item_id1+'</item_id><value>'+item_id+'</value></where></S3QL>';
-										controlUpdate++;
-										s3db_jsonpp_call(urlQuery,"confirmUpdates(ans)");	
-									}
-								}	
+						if (document.getElementById("tbodySelectItems"+allCollections[j].name)!=null) {
+							insertAssociations=document.getElementById("tbodySelectItems"+allCollections[j].name).childNodes;
+							for (var k=0; k<insertAssociations.length; k++) {
+								var tmp=insertAssociations[k].id.split("trSelectItems");
+								if (tmp[1]!="") {
+									tmp = tmp[1];
+								}
+								else{
+									tmp = tmp[0];
+								}
+								item_id = document.getElementById("selectItems"+tmp).value;
+								if (item_id!="") {
+									for (var q=0; q<allRules.length; q++) {
+										if ((allRules[q].subject_id==collectionReference)&&(allRules[q].object_id==collectionsAssociated[i])) {
+											urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[q].rule_id+'</rule_id><item_id>'+item_id1+'</item_id><value>'+item_id+'</value></where></S3QL>';
+											controlUpdate++;
+											s3db_jsonpp_call(urlQuery,"confirmUpdates(ans)");	
+										}
+									}	
+								}
 							}
 						}
 					}
