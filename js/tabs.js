@@ -176,6 +176,7 @@ var indexGrid = 0;
 	document.getElementById(id).style.textDecoration="none";
  }
  function queryCollectionsAssociated(collection_id,target){
+	 disabledButtons("imgSearch1");
 	 if (collection_id[0]!=null) {
 		if ((collection_id[0].error_code>0)&&(target==null)) {
 			alert("An unexpected error occurred on the server, please try again later!");

@@ -176,6 +176,7 @@ var indexGrid = 0;
 	document.getElementById(id).style.textDecoration="none";
  }
  function queryCollectionsAssociated(collection_id,target){
+	 disableButtons("imgSearch1");
 	 if (collection_id[0]!=null) {
 		if ((collection_id[0].error_code>0)&&(target==null)) {
 			alert("An unexpected error occurred on the server, please try again later!");
@@ -960,7 +961,7 @@ function removeNumberRules(tmp){
 	for (i = 0; i < tmp.length; i++) {
 		if (tmp[i].object!=null)
 		{
-			var founded = tmp[i].object.search(/[0-9][0-9]_/);
+			var founded = tmp[i].object.search(/^[0-9][0-9]_/);
 			if (founded!=-1)
 			{
 				tmp[i].object = tmp[i].object.slice(3);
@@ -973,7 +974,7 @@ function removeNumberSubject(tmp){
 	for (i = 0; i < tmp.length; i++) {
 		if (tmp[i].subjct!=null)
 		{
-			var founded = tmp[i].subject.search(/[0-9][0-9]_/);
+			var founded = tmp[i].subject.search(/^[0-9][0-9]_/);
 			if (founded!=-1)
 			{
 				tmp[i].subject = tmp[i].subject.slice(3);
