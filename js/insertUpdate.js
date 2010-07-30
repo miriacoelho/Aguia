@@ -211,42 +211,48 @@ function insert() {
 	}
 }
 function insertStatements(ans) {
-	var collectionReference = document.getElementById("collection").value;
-	var key = document.getElementById("key").value;
-	for (var i=0; i<arrayInsertUpdate.length; i++) {
-		for (var j=0; j<allRules.length; j++) {
-			if (allRules[j].rule_id==arrayInsertUpdate[i]) {
-				// Se eh colecao de referencia 
-				for (var k=0; k<allCollections.length; k++) {
-					if (allCollections[k].collection_id==collectionReference) {
-						if (collectionReference==allRules[j].subject_id) {
-							var isGrid=checkIfGrid(allCollections[k].collection_id);
-							if (isGrid == true){
-								for (var l=0;l<grid.length ;l++ )
-								{
-									if (allCollections[k].name==grid[l].collection_name)
+	if (ans[0].error_code!=0) {
+		alert(ans[0].message);
+		removeElement("loading");
+	}
+	else{
+		var collectionReference = document.getElementById("collection").value;
+		var key = document.getElementById("key").value;
+		for (var i=0; i<arrayInsertUpdate.length; i++) {
+			for (var j=0; j<allRules.length; j++) {
+				if (allRules[j].rule_id==arrayInsertUpdate[i]) {
+					// Se eh colecao de referencia 
+					for (var k=0; k<allCollections.length; k++) {
+						if (allCollections[k].collection_id==collectionReference) {
+							if (collectionReference==allRules[j].subject_id) {
+								var isGrid=checkIfGrid(allCollections[k].collection_id);
+								if (isGrid == true){
+									for (var l=0;l<grid.length ;l++ )
 									{
-										var aux = 0;
-										for (var m=1;m<grid[l].rows.count() ;m++ )
+										if (allCollections[k].name==grid[l].collection_name)
 										{
-											aux++;
-											result = checkField(allRules[j].rule_id,j);
-											value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+aux).value;
-											if (value!="") {
-												urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+ans[0].item_id+'</item_id><value>'+value+'</value></where></S3QL>';
-												controlInsert++;
-												s3db_jsonpp_call(urlQuery,"confirmInsertions(ans)");	
+											var aux = 0;
+											for (var m=1;m<grid[l].rows.count() ;m++ )
+											{
+												aux++;
+												result = checkField(allRules[j].rule_id,j);
+												value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id+"row"+aux).value;
+												if (value!="") {
+													urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+ans[0].item_id+'</item_id><value>'+value+'</value></where></S3QL>';
+													controlInsert++;
+													s3db_jsonpp_call(urlQuery,"confirmInsertions(ans)");	
+												}
 											}
 										}
 									}
 								}
-							}
-							else{
-								result = checkField(allRules[j].rule_id,j);
-								value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id).value;
-								urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+ans[0].item_id+'</item_id><value>'+value+'</value></where></S3QL>';
-								controlInsert++;
-								s3db_jsonpp_call(urlQuery,"confirmInsertions(ans)");
+								else{
+									result = checkField(allRules[j].rule_id,j);
+									value = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id).value;
+									urlQuery = url+'/S3QL.php?query=<S3QL><key>'+key+'</key><insert>statement</insert><where><rule_id>'+allRules[j].rule_id+'</rule_id><item_id>'+ans[0].item_id+'</item_id><value>'+value+'</value></where></S3QL>';
+									controlInsert++;
+									s3db_jsonpp_call(urlQuery,"confirmInsertions(ans)");
+								}
 							}
 						}
 					}
@@ -432,10 +438,16 @@ function confirmDeletions(ans,item_id1) {
 	}
 }
 function confirmUpdates(ans) {
-	controlUpdate1++;
-	if (controlUpdate==controlUpdate1) {
+	if (ans[0].error_code!=0) {
+		alert(ans[0].message);
 		removeElement("loading");
-		alert("Registry updated with sucess!!!")
+	}
+	else{
+		controlUpdate1++;
+		if (controlUpdate==controlUpdate1) {
+			removeElement("loading");
+			alert("Registry updated with sucess!!!")
+		}
 	}
 }
 function checkCollectionsAssociatedUpdate(id) {
