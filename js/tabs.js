@@ -946,16 +946,34 @@ function removeNumber(tmp){
 	return tmp;
 }
 function order(ans){
-	for (i = 0; i < ans.length-1; i++){
-		for (j = ans.length-1; i<j; j--){
-			if(ans[j].name<ans[j-1].name){
-				tmp = ans[j];
-				ans[j] = ans[j-1];
-				ans[j-1] = tmp;
+	var arrayTmp = new Array();
+	var newAns = new Array();
+	var indexNewAns = 0;
+	for (var i=0; i<ans.length; i++)
+	{
+		arrayTmp[i]=(ans[i].name).toLowerCase();
+	}
+	arrayTmp = arrayTmp.sort();
+	var arrayTmpUnique = array_unique(arrayTmp);
+	var tmp = new Array();
+	var indexTmp = 0;
+	for (var i=0; i<arrayTmp.length; i++) {
+		if (arrayTmpUnique[i]!=null) {
+			tmp[indexTmp] = arrayTmpUnique[i];
+			indexTmp++;
+		}
+	}
+	arrayTmp = tmp;
+	for (var i = 0; i < arrayTmp.length; i++){
+		for (var j = 0;j<ans.length; j++){
+			if (arrayTmp[i]==(ans[j].name).toLowerCase())
+			{
+				newAns[indexNewAns]=ans[j];
+				indexNewAns++;
 			}
 		}
 	}
-	return ans;
+	return newAns;
 }
 function removeNumberRules(tmp){
 	for (i = 0; i < tmp.length; i++) {
@@ -984,16 +1002,34 @@ function removeNumberSubject(tmp){
 	return tmp;
 }
 function orderRules(ans){
-	for (i = 0; i < ans.length-1; i++){
-		for (j = ans.length-1; i<j; j--){
-			if(ans[j].object<ans[j-1].object){
-				tmp = ans[j];
-				ans[j] = ans[j-1];
-				ans[j-1] = tmp;
+	var arrayTmp = new Array();
+	var newAns = new Array();
+	var indexNewAns = 0;
+	for (var i=0; i<ans.length; i++)
+	{
+		arrayTmp[i]=(ans[i].object).toLowerCase();
+	}
+	arrayTmp = arrayTmp.sort();
+	var arrayTmpUnique = array_unique(arrayTmp);
+	var tmp = new Array();
+	var indexTmp = 0;
+	for (var i=0; i<arrayTmp.length; i++) {
+		if (arrayTmpUnique[i]!=null) {
+			tmp[indexTmp] = arrayTmpUnique[i];
+			indexTmp++;
+		}
+	}
+	arrayTmp = tmp;
+	for (var i = 0; i < arrayTmp.length; i++){
+		for (var j = 0;j<ans.length; j++){
+			if (arrayTmp[i]==(ans[j].object).toLowerCase())
+			{
+				newAns[indexNewAns]=ans[j];
+				indexNewAns++;
 			}
 		}
 	}
-	return ans;
+	return newAns;
 }
 function init(idTab,initName,initBoolean,activeTab,width,height){
 	initTabs(idTab,initName,activeTab,width,height,initBoolean);
