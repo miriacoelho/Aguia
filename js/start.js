@@ -10,7 +10,7 @@
 	img.align = "center";
 	document.body.appendChild(img);	
 	setStyle("imgAguia","absolute","","","9%","05px");
-	createP("pTextLogo","AGUIA - Autonomous Graphic User Interface Assembly","body");
+	createP("pTextLogo","AGUIA: Autonomous Graphical User Interface Assembly","body");
 	setStyle("pTextLogo","absolute","600px","","1%","80px");
 	document.getElementById("pTextLogo").style.font="italic bold 18px arial,serif";
 	document.getElementById("pTextLogo").style.fontWeight="900";
