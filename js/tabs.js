@@ -74,10 +74,29 @@ var indexGrid = 0;
 		dCollection = new dTree('dCollection');
 		dCollection.add(0,-1,"Select a Collection");
 		ans= order(ans);
-		ans=removeNumber(ans);
 		var found = false;
 		var collectionTree = new Array();
 		var arrayCollectionTree = 0;
+		for (var i=0; i<ans.length; i++) {
+			for (var j=0; j<subCollections.length; j++) {
+				for (var k=0; k<subCollections[j].length; k++) {
+					if (ans[i].resource_id==subCollections[j][k].value) {
+						subCollections[j][k].name=ans[i].name;
+					}
+					else{
+						if (subCollections[j][k].verb=="action") {
+							subCollections[j][k].name="";	
+						}
+					}
+				}
+			}
+		}
+		var newSubCollections = new Array();
+		for (var i=0; i<subCollections.length; i++) {
+			newSubCollections[i]=order(subCollections[i]);
+		}
+		ans=removeNumber(ans);
+		subCollections = newSubCollections;
 		for (var i=0; i<ans.length; i++) {
 			for (var j=0; j<subCollections.length; j++) {
 				for (var k=0; k<subCollections[j].length; k++) {
@@ -115,7 +134,7 @@ var indexGrid = 0;
 								if (subCollections[j][l].verb=="range") {
 									subCollectionsTree[index][index1]=subCollections[j][l].value;
 									index1++;
-								}
+								}	
 							}
 						}
 					}
