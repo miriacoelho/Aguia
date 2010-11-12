@@ -12,19 +12,19 @@ function validationData(){
 	url = removeLoginPHP(document.getElementById("inputURL").value);
 	url = url[0];
 	if (username == "") {
-		alert("Please, enter your username");
+		alert("Please type your username");
 		return false;
 	}
 	else {
 		if (password == "") {
-			alert("Please, enter your password");
+			alert("Please type your password");
 			return false;
 		}
 	}
 	var authority = document.getElementById("selectAutentication").value;
 	if (authority == "")
 	{
-		alert("Please, enter authority");
+		alert("Please select an authority");
 	}
 	else{
 		whatURL="url";
