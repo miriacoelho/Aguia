@@ -5,12 +5,6 @@
  var whatURL="";
 function validationData(){
 	createP("pLoading","","body");
-	createP("pTextLoading","Loading...","body");
-	createImg("loading","","pLoading","Loading","images/loading.gif","");
-	setStyle("loading","absolute","","","90%","50px");
-	setStyle("pTextLoading","absolute","","","90%","60px");
-	document.getElementById("pTextLoading").style.color = "#00CC33";
-	document.getElementById("pTextLoading").style.font="bold 16px arial,serif";
 	var falseUrl = false;
 	createImg("loading","","pLoading","Loading","images/loading.gif","");
 	setStyle("loading","absolute","","","80%","50px");
