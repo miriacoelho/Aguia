@@ -13,11 +13,13 @@ function validationData(){
 	url = url[0];
 	if (username == "") {
 		alert("Please type your username");
+		removeElement("pLoading");
 		return false;
 	}
 	else {
 		if (password == "") {
 			alert("Please type your password");
+			removeElement("pLoading");
 			return false;
 		}
 	}
@@ -25,6 +27,7 @@ function validationData(){
 	if (authority == "")
 	{
 		alert("Please select an authority");
+		removeElement("pLoading");
 	}
 	else{
 		whatURL="url";
