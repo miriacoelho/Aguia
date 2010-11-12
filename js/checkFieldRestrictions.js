@@ -247,6 +247,8 @@ function restrictionActive(id){
 						{
 							var number = getNumberRowGrid(id);
 							hasGrid = "row"+number;
+							result = checkField(allRules[j].rule_id,j);
+							receiveValue = document.getElementById(result+allRules[j].subject+allRules[j].object +allRules[j].rule_id+hasGrid).value;
 							checkFieldRestrictions1(receiveValue,id,hasGrid);
 						}
 						else{
