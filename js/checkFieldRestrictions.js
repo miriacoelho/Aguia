@@ -521,6 +521,7 @@ function insertValueInput(number,tmp,hasGrid){
 						calc = Math.floor(calc);
 					}
 					document.getElementById(result +allRules[g].subject+allRules[g].object +allRules[g].rule_id+hasGrid).value=calc;
+					lala=[];
 				}
 			}		
 		}
