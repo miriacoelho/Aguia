@@ -482,7 +482,7 @@ function formula1(number,valueInput,validationDate,hasGrid,indexLala,verifyInput
 				}
 			}
 		}
-		insertValueInput(number,lala[better],hasGrid);
+		insertValueInput(number,lala[better],hasGrid,moreOptions);
 	}
 	else{
 		if (optionsFormula.length==1)
@@ -502,7 +502,7 @@ function formula1(number,valueInput,validationDate,hasGrid,indexLala,verifyInput
 		}
 	}
 }
-function insertValueInput(number,tmp,hasGrid){
+function insertValueInput(number,tmp,hasGrid,moreOptions){
 	//var length = number.length-1;
 	for (var i=0; i<optionsFormula.length; i++) {
 		if (optionsFormula[i].verb=="range") {
@@ -515,13 +515,15 @@ function insertValueInput(number,tmp,hasGrid){
 					if (calc<0)
 					{
 						calc=-calc;
-						calc = Math.floor(calc);
+						calc = Math.round( calc * Math.pow( 10 , 2 ) ) / Math.pow( 10 , 2 );
 					}
 					else{
-						calc = Math.floor(calc);
+						calc = Math.round( calc * Math.pow( 10 , 2 ) ) / Math.pow( 10 , 2 );
 					}
 					document.getElementById(result +allRules[g].subject+allRules[g].object +allRules[g].rule_id+hasGrid).value=calc;
-					lala=[];
+					if (moreOptions==1) {
+						lala=[];	
+					}
 				}
 			}		
 		}
